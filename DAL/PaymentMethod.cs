@@ -6,35 +6,21 @@ namespace DAL
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class User
+    public partial class PaymentMethod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public PaymentMethod()
         {
-            Tokens = new HashSet<Token>();
+            Payments = new HashSet<Payment>();
         }
 
-        public int UserId { get; set; }
+        public int ID { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public string Username { get; set; }
-
-        [StringLength(64)]
-        public string Salt { get; set; }
-
-        [Required]
-        [StringLength(128)]
-        public string Password { get; set; }
-
         [StringLength(50)]
         public string Name { get; set; }
 
-        public int RequestAllowed { get; set; }
-
-        public bool IsSuperUser { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Token> Tokens { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

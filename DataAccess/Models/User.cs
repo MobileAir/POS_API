@@ -1,14 +1,11 @@
-namespace DAL
-{
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
+namespace DataAccess.Models
+{
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        
         public User()
         {
             Tokens = new HashSet<Token>();
@@ -33,8 +30,7 @@ namespace DAL
         public int RequestAllowed { get; set; }
 
         public bool IsSuperUser { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        
         public virtual ICollection<Token> Tokens { get; set; }
     }
 }

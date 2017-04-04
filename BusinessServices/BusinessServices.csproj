@@ -57,10 +57,6 @@
     <Compile Include="UserServices.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj">
-      <Project>{dba230d5-cce3-4423-9b99-fbe7cb3402bc}</Project>
-      <Name>BusinessEntities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{67e8cc86-abba-4541-b718-ecfbd6838961}</Project>
       <Name>DAL</Name>

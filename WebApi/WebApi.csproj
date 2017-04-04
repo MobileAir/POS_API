@@ -296,10 +296,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessEntities\BusinessEntities.csproj">
-      <Project>{dba230d5-cce3-4423-9b99-fbe7cb3402bc}</Project>
-      <Name>BusinessEntities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BusinessServices\BusinessServices.csproj">
       <Project>{f6f78312-b689-40f0-88b4-578ece2c2f4e}</Project>
       <Name>BusinessServices</Name>
