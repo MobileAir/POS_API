@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
-using BusinessEntities;
-using DAL;
-using DAL.UnitOfWork;
+using DataAccess.Models;
+using DataAccess.UnitOfWork;
+using Services.DTOs;
 
-namespace BusinessServices
+namespace Services
 {
     /// <summary>
     /// Offers services for user specific operations
@@ -29,7 +29,7 @@ namespace BusinessServices
         /// <returns></returns>
         public int Authenticate(string userName, string password)
         {
-            var user = _unitOfWork.UserRepository.Get(u => u.UserName == userName /*&& u.Password == password*/);
+            var user = _unitOfWork.UserRepository.Get(u => u.Username == userName /*&& u.Password == password*/);
             if (user != null && user.UserId > 0)
             {
                 var storedPassword = user.Password;
@@ -75,20 +75,20 @@ namespace BusinessServices
         }
 
 
-        public string Create(UserEntity userEntity)
+        public string Create(UserDTO userDto)
         {
             try
             {
-                var exist = _unitOfWork.UserRepository.GetFirst(x => x.UserName == userEntity.UserName);
+                var exist = _unitOfWork.UserRepository.GetFirst(x => x.Username == userDto.Username);
                 if (exist != null) return "Username already exist";
 
                 var user = new User();
 
                 var salt = GenerateSaltValue();
                 //salt = ToBase64(salt);
-                var hashedPassword = HashPassword(userEntity.Password, salt);
+                var hashedPassword = HashPassword(userDto.Password, salt);
 
-                user.UserName = userEntity.UserName;
+                user.Username = userDto.Username;
                 user.Salt = salt;
                 user.Password = hashedPassword;
                 user.RequestAllowed = 10;

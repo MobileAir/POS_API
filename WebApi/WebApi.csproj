@@ -296,13 +296,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BusinessServices\BusinessServices.csproj">
-      <Project>{f6f78312-b689-40f0-88b4-578ece2c2f4e}</Project>
-      <Name>BusinessServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Resolver\Resolver.csproj">
       <Project>{9218b2ab-052c-49db-935d-45150c4053be}</Project>
       <Name>Resolver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Services\Services.csproj">
+      <Project>{ddde862b-1db6-4c79-a726-0dd377e2d1e5}</Project>
+      <Name>Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

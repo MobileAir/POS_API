@@ -1,6 +1,6 @@
-﻿using BusinessEntities;
+﻿using Services.DTOs;
 
-namespace BusinessServices
+namespace Services
 {
     public interface ITokenServices
     {
@@ -11,7 +11,7 @@ namespace BusinessServices
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        TokenEntity GenerateToken(int userId);
+        TokenDTO GenerateToken(int userId);
 
         /// <summary>
         /// Function to validate token againt expiry and existance in database.

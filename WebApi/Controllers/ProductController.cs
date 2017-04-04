@@ -4,8 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
-using BusinessEntities;
-using BusinessServices;
+using Services;
+using Services.DTOs;
 using WebApi.ActionFilters;
 using WebApi.Filters;
 
@@ -45,10 +45,10 @@ namespace WebApi.Controllers
         //[EnableQuery(PageSize = 500)] // [EnableQuery()] : transform the Odata query into LINQ. LinQ to Entities in this instance
         public HttpResponseMessage Get()
         {
-            var products = _productServices.GetAllProducts().AsQueryable();
+            var products = _productServices.GetAll().AsQueryable();
             if (products != null)
             {
-                var productEntities = products as List<ProductEntity> ?? products.ToList();
+                var productEntities = products as List<ProductDTO> ?? products.ToList();
                 if (productEntities.Any())
                     return Request.CreateResponse(HttpStatusCode.OK, productEntities);
             }
@@ -59,12 +59,12 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetOrderedByName()
         {
-            var products = _productServices.GetAllProducts();
+            var products = _productServices.GetAll();
             if (products != null)
             {
-                var productEntities = products as List<ProductEntity> ?? products.ToList();
+                var productEntities = products as List<ProductDTO> ?? products.ToList();
                 if (productEntities.Any())
-                    return Request.CreateResponse(HttpStatusCode.OK, productEntities.OrderByDescending(x => x.ProductName));
+                    return Request.CreateResponse(HttpStatusCode.OK, productEntities.OrderByDescending(x => x.Name));
             }
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
         }
@@ -74,7 +74,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
-            var product = _productServices.GetProductById(id);
+            var product = _productServices.GetById(id);
             if (product != null)
                 return Request.CreateResponse(HttpStatusCode.OK, product);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
@@ -84,7 +84,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetByName(string name)
         {
-            var product = _productServices.GetAllProducts().FirstOrDefault(x => x.ProductName.ToLower() == name.ToLower());
+            var product = _productServices.GetAll().FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
             if (product != null)
                 return Request.CreateResponse(HttpStatusCode.OK, product);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
@@ -94,20 +94,20 @@ namespace WebApi.Controllers
         [Route("add")]
         [Route("post")]
         [HttpPost]
-        public ProductEntity Post([FromBody] ProductEntity productEntity)
+        public ProductDTO Post([FromBody] ProductDTO productEntity)
         {
-            return _productServices.CreateProduct(productEntity);
+            return _productServices.Create(productEntity);
         }
 
         // PUT api/product/5
         [Route("update/{id:int}")]
         [Route("put/{id:int}")]
         [HttpPut]
-        public bool Put(int id, [FromBody]ProductEntity productEntity)
+        public bool Put(int id, [FromBody]ProductDTO productEntity)
         {
             if (id > 0)
             {
-                return _productServices.UpdateProduct(id, productEntity);
+                return _productServices.Update(id, productEntity);
             }
             return false;
         }
@@ -119,7 +119,7 @@ namespace WebApi.Controllers
         public bool Delete(int id)
         {
             if (id > 0)
-                return _productServices.DeleteProduct(id);
+                return _productServices.Delete(id);
             return false;
         }
     }

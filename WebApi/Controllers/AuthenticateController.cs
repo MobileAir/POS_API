@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using BusinessEntities;
-using BusinessServices;
+using Services;
+using Services.DTOs;
 using WebApi.Filters;
 
 namespace WebApi.Controllers
@@ -71,9 +71,9 @@ namespace WebApi.Controllers
         
         [Route("createuser")]
         [HttpPost]
-        public string Post([FromBody] UserEntity userEntity)
+        public string Post([FromBody] UserDTO userDto)
         {
-            return _userServices.Create(userEntity);
+            return _userServices.Create(userDto);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Resolver;
 using System.ComponentModel.Composition;
 
-namespace BusinessServices
+namespace Services
 {
     [Export(typeof(IComponent))]
     public class DependencyResolver : IComponent

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
-using BusinessEntities;
-using DAL;
-using DAL.UnitOfWork;
+using DataAccess.Models;
+using DataAccess.UnitOfWork;
+using Services.DTOs;
 
-namespace BusinessServices
+namespace Services
 {
     public class TokenServices : ITokenServices
     {
@@ -32,7 +32,7 @@ namespace BusinessServices
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public TokenEntity GenerateToken(int userId)
+        public TokenDTO GenerateToken(int userId)
         {
             string token = Guid.NewGuid().ToString();
             DateTime issuedOn = DateTime.Now;
@@ -50,7 +50,7 @@ namespace BusinessServices
 
             _unitOfWork.TokenRepository.Insert(tokendomain);
             _unitOfWork.Save();
-            var tokenModel = new TokenEntity()
+            var tokenModel = new TokenDTO()
             {
                 UserId = userId,
                 IssuedOn = issuedOn,
