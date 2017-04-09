@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Configuration;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Services;
@@ -7,7 +8,7 @@ using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
-    [ApiAuthenticationFilter] //-> Requires credential Basic Auth
+    [ApiBasicAuthenticationFilter] //-> Requires credential Basic Auth
     public class AuthenticateController : ApiController
     {
         #region Private variable.
@@ -59,16 +60,21 @@ namespace WebApi.Controllers
         /// <returns></returns>
         private HttpResponseMessage GetAuthToken(int userId)
         {
-            //var token = _tokenServices.GenerateToken(userId);
+            var token = _tokenServices.GenerateToken(userId);
             var response = Request.CreateResponse(HttpStatusCode.OK, "Authorized");
-            //response.Headers.Add("Token", token.AuthToken);
-            //response.Headers.Add("TokenIssuedOn", token.IssuedOn.ToString("F"));
-            //response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpiry"]);
-            //response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry");
+            response.Headers.Add("Token", token.AuthToken);
+            response.Headers.Add("TokenIssuedOn", token.IssuedOn.ToString("F"));
+            response.Headers.Add("TokenExpiresOn", token.ExpiresOn.ToString("F"));
+            response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiresOn");
             return response;
         }
 
-        
+        /// <summary>
+        /// For testing as for now - create user.
+        /// To be build properly later...
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
         [Route("createuser")]
         [HttpPost]
         public string Post([FromBody] UserDTO userDto)

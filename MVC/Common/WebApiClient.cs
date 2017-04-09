@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 
 namespace MVC.Common
@@ -22,11 +24,11 @@ namespace MVC.Common
             string baseUrl = "";
             try
             {
-                baseUrl = ConfigurationManager.AppSettings["RestApiBaseUrl"] ?? "Not Found";
+                baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"] ?? "Not Found";
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error reading app settings: " + ex);
+                // Log...
             }
             return baseUrl;
         }
@@ -48,87 +50,88 @@ namespace MVC.Common
             return request;
         }
 
+        private HttpClient ConfigureTokenAuthOnlyRequest(string token)
+        {
+            var request = new HttpClient();
+            request.BaseAddress = new Uri(GetRestApiBaseUrl());
+            request.DefaultRequestHeaders.Accept.Clear();
+            request.DefaultRequestHeaders.Add("Token", token);
+            request.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            return request;
+        }
+
         /// <summary>
-        /// Token Authorization for web api controller decorate : [AuthorizationRequired] -> this force the use of valid token
+        /// Get Token for each Action call if not in session or expired
         /// </summary>
         /// <returns></returns>
-        private HttpClient ConfigureTokenRequest()
+        public TokenHeaders RequestToken()
         {
-            if (!CheckSessionTokens())
+            var tokenHeaders = new TokenHeaders();
+            try
             {
-                // fail as well Race condition shared ressource. Cannot lock on session
-                var session = System.Web.HttpContext.Current.Session;
-                //RequestToken();
                 var request = ConfigureBasicAuthRequest();
-                var response = request.PostAsync("login", null).ContinueWith((taskWebResp) =>
-                {
-                    try
+                
+                using (
+                    var response = request.PostAsync("login", null).ContinueWith((taskWithResponse) =>
                     {
-                        var headers = taskWebResp.Result.Headers;
-                        IEnumerable<string> values;
 
-                        if (headers.TryGetValues("Token", out values))
+                        if (taskWithResponse != null)
                         {
-                            string token = values.First();
-                            session["Token"] = token;
+                            if (taskWithResponse.Status != TaskStatus.RanToCompletion)
+                            {
+                                throw new Exception(
+                                    $"Server error (HTTP {taskWithResponse.Result?.StatusCode}: {taskWithResponse.Exception?.InnerException} : {taskWithResponse.Exception?.Message}).");
+                            }
+                            else if (taskWithResponse.Result.IsSuccessStatusCode)
+                            {
+                                var jsonString = taskWithResponse.Result.Content.ReadAsStringAsync();
+                                jsonString.Wait();
+                                var headers = taskWithResponse.Result.Headers;
+                                tokenHeaders.Token = headers.GetValues("Token")?.First();
+                                var expiresOn = headers.GetValues("TokenExpiresOn")?.First();
+                                if(expiresOn != null)
+                                    tokenHeaders.ExpiresOn = DateTime.Parse(expiresOn);
+                            }
+                            else
+                            {
+                                throw new Exception($"{taskWithResponse.Result.ReasonPhrase} : {taskWithResponse.Result.StatusCode} ");
+                            }
+
                         }
-                        if (headers.TryGetValues("TokenExpiry", out values))
-                        {
-                            string expiry = values.First();
-                            session["TokenExpiry"] = expiry;
-                        }
-                        if (headers.TryGetValues("TokenIssuedOn", out values))
-                        {
-                            string issued = values.First();
-                            session["TokenIssuedOn"] = issued;
-                        }
-                    }
-                    catch (AggregateException e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                });
-                response.Wait();
-                if (response.Status == TaskStatus.RanToCompletion)
+
+                    }))
                 {
-                    var req = new HttpClient { BaseAddress = new Uri(GetRestApiBaseUrl()) };
-                    req.DefaultRequestHeaders.Add("Token", session["Token"].ToString()); // fail as well Race condition shared ressource. Cannot lock on session.//GetSessionToken()); // RACE COND WOULD PROB MAKE THIS call with "" then resp 401 Un-Auth
-                    req.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    return request;
+                    response.Wait();
                 }
+
             }
-
-            var r = new HttpClient { BaseAddress = new Uri(GetRestApiBaseUrl()) };
-            r.DefaultRequestHeaders.Add("Token", GetSessionToken()); // RACE COND WOULD PROB MAKE THIS call with "" then resp 401 Un-Auth
-            r.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            return r;
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return tokenHeaders;
         }
 
         /// <summary>
-        /// WEb APi controller with Atribvute [AuthorizationRequired], below called from Singleton BaseController
-        /// HAve an issue where if Token expires, how to call login, store token then finish orghinal call...seems to be a  race condition
-        /// </summary>
-        public void RequestToken()
-        {
-            var request = ConfigureBasicAuthRequest();
-            var response = request.PostAsync("login", null).ContinueWith(SetSessionTokens);
-            response.Wait();
-        }
-
-        /// <summary>
-        /// Generic Web API caller
+        /// Generic GET API caller
         /// </summary>
         /// <returns></returns>
-        public WebApiResponse<T> Get<T>(string url) where T : class
+        public WebApiResponse<T> Get<T>(string url, string token = null) where T : class
         {
             var result = new WebApiResponse<T>();
             try
             {
-                var request = ConfigureBasicAuthRequest();
+                HttpClient request = null;
+                //if (!token.IsNullOrWhiteSpace())
+                //    request = ConfigureTokenAuthOnlyRequest(token);
+                //else
+                //    request = ConfigureBasicAuthRequest();
+
+                if (!token.IsNullOrWhiteSpace())
+                    request = ConfigureTokenAuthOnlyRequest(token);
+                else
+                    return new WebApiResponse<T>() {ReasonPhrase = "No token included in the request", StatusCode = HttpStatusCode.ExpectationFailed};
+
                 using (
                     var response = request.GetAsync(url).ContinueWith((taskWithResponse) =>
                     {
@@ -149,6 +152,11 @@ namespace MVC.Common
                                 result.Success = true;
                                 result.Data = data;
                                 taskWithResponse.Wait(); // TODO no Wait and keep async...?
+                            }
+                            else
+                            {
+                                result.ReasonPhrase = taskWithResponse.Result.ReasonPhrase;
+                                result.StatusCode = taskWithResponse.Result.StatusCode;
                             }
 
                         }
@@ -183,6 +191,7 @@ namespace MVC.Common
             {
                 var request = ConfigureBasicAuthRequest();
 
+                //TODO: do check for null bef convert
                 StringContent content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
                     var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
@@ -203,8 +212,7 @@ namespace MVC.Common
                                 var data = JsonConvert.DeserializeObject<T>(jsonString.Result);
                                 result.Success = true;
                                 result.Data = data;
-                                taskWithResponse.Wait(); // TODO no Wait and keep async...?
-                                                         //SetSessionToken(taskWithResponse);
+                                taskWithResponse.Wait(); // TODO no Wait and keep async...? //SetSessionToken(taskWithResponse);
                             }
 
                         }

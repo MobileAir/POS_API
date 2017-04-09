@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
@@ -39,6 +41,10 @@ namespace WebApi.Filters
         /// <param name="filterContext"></param>
         public override void OnAuthorization(HttpActionContext filterContext)
         {
+            //IEnumerable<string> hasToken = null;
+            //filterContext.Request.Headers.TryGetValues("Token", out hasToken);
+            //if (hasToken != null)
+            //    return; // let Token filter handle from there
             if (!_isActive) return;
             var identity = FetchAuthHeader(filterContext);
             if (identity == null)

@@ -11,14 +11,9 @@ using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
-    /// <summary>
-    /// TODO: TO properly used AuthorizationRequired, I am sending the token expiry as well. Then on Client. On app laod would need to login then store token in session. 
-    /// On each call, check Session token expiry, if expired, login get new token then call the api
-    /// But then everytimes the token expired ... 2 calls would be necessary, login and get token. then call with token.. but if give it 30 min won;t happen often
-    /// Process: login client, with account stored on client. If successfule make async call to web api login. Get token 30 min. THen nresource are called with Token.
-    /// </summary>
-    //[AuthorizationRequired] // or use can be use at action level -> this force the use of valid token
-    [ApiAuthenticationFilter] // or use in Global.asax for all Controllers => GlobalConfiguration.Configuration.Filters.Add(new ApiAuthenticationFilter());
+    [TokenAuthorizationRequired] // Should be applied manually on controllers or use can be use at action level -> this check first if have a token then valid token
+    //ApiBasicAuthenticationFilter: Can be applied in Global.asax for all Controllers => GlobalConfiguration.Configuration.Filters.Add(new ApiAuthenticationFilter());
+    //[ApiBasicAuthenticationFilter] // This is Basic Auth only for every req. cal also be used as a Fallback from client. Will try get resource directly Basic Auth and no token header. 
     [RoutePrefix("v1/Products")]
     public class ProductController : ApiController
     {

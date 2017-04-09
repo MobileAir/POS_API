@@ -13,7 +13,7 @@ namespace WebApi.ActionFilters
     /// On each call, check Session token expiry, if expired, login get new token then call the api
     /// But then everytimes the token expired ... 2 calls would be necessary, login and get token. then call with token
     /// </summary>
-    public class AuthorizationRequiredAttribute : ActionFilterAttribute
+    public class TokenAuthorizationRequiredAttribute : ActionFilterAttribute
     {
         private const string Token = "Token";
 

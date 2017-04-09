@@ -82,7 +82,7 @@ namespace Services
                     //                              Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
 
                     // TODO remove the below once set to 24 hours?
-                    // this add 15 min based on now when new resouirces requested su\ccessfully with token
+                    // this add configured min based on now when new resouirces requested su\ccessfully with token
                     token.ExpiresOn =
                         DateTime.Now.AddSeconds(Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
                     token.Request = token.Request + 1; // SuperUser never get the increment!
@@ -93,7 +93,7 @@ namespace Services
 
                 if (user != null && user.IsSuperUser) //  SuperUser never get the increment! => token.Request = token.Request + 1; 
                 {
-                    // this add 15 min based on now when new resouirces requested su\ccessfully with token
+                    // this add configured min based on now when new resouirces requested su\ccessfully with token
                     token.ExpiresOn =
                         DateTime.Now.AddSeconds(Convert.ToDouble(ConfigurationManager.AppSettings["AuthTokenExpiry"]));
                     _unitOfWork.TokenRepository.Update(token);

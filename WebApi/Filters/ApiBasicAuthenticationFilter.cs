@@ -7,12 +7,12 @@ namespace WebApi.Filters
     /// <summary>
     /// Custom Authentication Filter Extending basic Authentication
     /// </summary>
-    public class ApiAuthenticationFilter : GenericBasicAuthenticationFilter
+    public class ApiBasicAuthenticationFilter : GenericBasicAuthenticationFilter
     {
         /// <summary>
         /// Default Authentication Constructor
         /// </summary>
-        public ApiAuthenticationFilter()
+        public ApiBasicAuthenticationFilter()
         {
         }
 
@@ -20,7 +20,7 @@ namespace WebApi.Filters
         /// AuthenticationFilter constructor with isActive parameter
         /// </summary>
         /// <param name="isActive"></param>
-        public ApiAuthenticationFilter(bool isActive)
+        public ApiBasicAuthenticationFilter(bool isActive)
             : base(isActive)
         {
         }

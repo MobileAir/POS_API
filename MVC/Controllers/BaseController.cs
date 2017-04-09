@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using MVC.Common;
 
 namespace MVC.Controllers
@@ -9,12 +10,29 @@ namespace MVC.Controllers
     /// </summary>
     public class BaseController : Controller
     {
-        
-
         public BaseController()
         {
-            //Session["CurrentUser"] = "";
-            //var singleton = Singleton.Instance;
+            // TODO move all this to a filter instead of a Base controller... or in global - will always check for Token
+            //var singleton = Singleton.Instance; // that's bad idea what the idea when the token expires??
+
+            //var token = System.Web.HttpContext.Current.Session["Token"];
+            //var expiresOn = System.Web.HttpContext.Current.Session["TokenExpiresOn"];
+
+            //if 
+            //    (token == null || token.ToString().IsNullOrWhiteSpace() ||
+            //    expiresOn == null ||
+            //    expiresOn.ToString().IsNullOrWhiteSpace() ||
+            //    DateTime.Parse(expiresOn.ToString()) < DateTime.Now)
+            //{
+            //    // get token
+            //    var tokenH = new WebApiClient().RequestToken(); 
+
+            //    // set token
+            //    System.Web.HttpContext.Current.Session["Token"] = tokenH.Token;
+            //    System.Web.HttpContext.Current.Session["TokenExpiresOn"] = tokenH.ExpiresOn;
+            //}
+
+            
         }
     }
 

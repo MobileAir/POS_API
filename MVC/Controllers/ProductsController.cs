@@ -1,32 +1,44 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using MVC.Common;
 using MVC.Models;
+using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
-    public class ProductsController : BaseController
+    [MVC.Filters.BasicAuthTokenFilter]
+    public class ProductsController : Controller
     {
         // GET: Products
         public ActionResult Index(string data = null)
         {
-            List<ProductDto> products = null;
+            List<ProductVm> products = null;
 
             if (data != null && TempData["Model"] != null)
             {
-                var p = (ProductDto) TempData["Model"];
-                ViewBag.Product = $"Success data change to {p.ProductName}";
+                var p = (ProductVm) TempData["Model"];
+                ViewBag.Product = $"Success data change to {p.name}";
             }
 
-            var resp = new WebApiClient().Get<List<ProductDto>>("v1/Products/all");
-            products = resp?.Data;
-            if (products == null)
+            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
+            if (sessionToken != null && !sessionToken.ToString().IsNullOrWhiteSpace())
             {
-                // Get - Debug basic error  info
-                return HttpNotFound(resp?.Exception ?? "Response was null");
+                var r = new WebApiClient().Get<List<ProductVm>>("v1/Products/all", sessionToken.ToString());
+                products = r?.Data;
+                if (products == null)
+                {
+                    // Get - Debug basic error  info - basic handliing better should be done
+                    if (r?.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return new HttpUnauthorizedResult(r?.ReasonPhrase);
+                    }
+                    return HttpNotFound(r?.Exception ?? "Response was null");
+                }
+                return View(products);
             }
-            return View(products);
+            return new HttpUnauthorizedResult("Not auth - please try again"); // redirect login or somehting;
         }
 
         // GET: Products/Details/5
@@ -36,8 +48,8 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var resp = new WebApiClient().Get<ProductDto>($"v1/Products/get/{id}");
-            ProductDto product = resp?.Data;
+            var resp = new WebApiClient().Get<ProductVm>($"v1/Products/get/{id}");
+            ProductVm product = resp?.Data;
             if (product == null)
             {
                 // Get - Debug basic error  info
