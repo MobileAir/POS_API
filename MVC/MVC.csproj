@@ -128,9 +128,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Common\ApiRequestManager.cs" />
     <Compile Include="Common\TokenHeaders.cs" />
-    <Compile Include="Common\WebApiResponse.cs" />
-    <Compile Include="Common\WebApiClient.cs" />
+    <Compile Include="Common\ApiResponse.cs" />
+    <Compile Include="Common\ApiCRUDClient.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />

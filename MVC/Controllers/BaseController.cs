@@ -25,7 +25,7 @@ namespace MVC.Controllers
             //    DateTime.Parse(expiresOn.ToString()) < DateTime.Now)
             //{
             //    // get token
-            //    var tokenH = new WebApiClient().RequestToken(); 
+            //    var tokenH = new ApiCRUDClient().RequestToken(); 
 
             //    // set token
             //    System.Web.HttpContext.Current.Session["Token"] = tokenH.Token;
@@ -43,7 +43,7 @@ namespace MVC.Controllers
 
         private Singleton()
         {
-            new WebApiClient().RequestToken(); // get token
+            ApiRequestManager.RequestToken(); // get token
         }
 
         public static Singleton Instance
