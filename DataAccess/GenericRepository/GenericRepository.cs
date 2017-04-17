@@ -178,7 +178,7 @@ namespace DataAccess.GenericRepository
         /// <returns>A single record that matches the specified criteria</returns>
         public TEntity GetSingle(Func<TEntity, bool> predicate)
         {
-            return DbSet.Single<TEntity>(predicate);
+            return DbSet.SingleOrDefault<TEntity>(predicate);
         }
 
         /// <summary>

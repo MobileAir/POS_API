@@ -2,13 +2,13 @@
 using System.Net;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
+using MVC.Attributes;
 using MVC.Common;
 using MVC.Models;
 using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
-    [MVC.Filters.BasicAuthTokenFilter]
     public class ProductsController : Controller
     {
         // GET: Products
@@ -18,14 +18,14 @@ namespace MVC.Controllers
 
             if (data != null && TempData["Model"] != null)
             {
-                var p = (ProductVm) TempData["Model"];
+                var p = (ProductVm)TempData["Model"];
                 ViewBag.Product = $"Success data change to {p.name}";
             }
 
-            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
+            var sessionToken = Session["Token"];
             if (sessionToken != null && !sessionToken.ToString().IsNullOrWhiteSpace())
             {
-                var r = new ApiCRUDClient().Get<List<ProductVm>>("v1/Products/all", sessionToken.ToString());
+                var r = new TokenAuthCrudClient().Get<List<ProductVm>>("v1/Products/all", sessionToken.ToString(), Request.UserAgent);
                 products = r?.Data;
                 if (products == null)
                 {
@@ -48,8 +48,8 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-            var resp = new ApiCRUDClient().Get<ProductVm>($"v1/Products/get/{id}", sessionToken.ToString());
+            var sessionToken = Session["Token"];
+            var resp = new TokenAuthCrudClient().Get<ProductVm>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent);
             ProductVm product = resp?.Data;
             if (product == null)
             {
@@ -74,12 +74,13 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-                var response = new ApiCRUDClient().Post<ProductDto>($"v1/Products/add", sessionToken.ToString(), product);
+                var sessionToken = Session["Token"];
+                var response = new TokenAuthCrudClient().
+                    Post<ProductDto>($"v1/Products/add", sessionToken.ToString(), Request.UserAgent, product);
                 if (response.Success && response.Data != null)
                 {
                     TempData["Model"] = response.Data;
-                    return RedirectToAction("Index", new {data = "Success"});
+                    return RedirectToAction("Index", new { data = "Success" });
                 }
             }
 
@@ -93,8 +94,8 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-            ProductDto product = new ApiCRUDClient().Get<ProductDto>($"v1/Products/get/{id}", sessionToken.ToString())?.Data;
+            var sessionToken = Session["Token"];
+            ProductDto product = new TokenAuthCrudClient().Get<ProductDto>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
             if (product == null)
             {
                 return HttpNotFound();
@@ -111,8 +112,9 @@ namespace MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-                var response = new ApiCRUDClient().Put<ProductDto>($"v1/Products/update/{product.ProductId}", sessionToken.ToString(), product);
+                var sessionToken = Session["Token"];
+                var response = new TokenAuthCrudClient().
+                    Put<ProductDto>($"v1/Products/update/{product.ProductId}", sessionToken.ToString(), Request.UserAgent, product);
                 if (response.Success)
                 {
                     TempData["Model"] = product;
@@ -129,8 +131,8 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-            ProductDto product = new ApiCRUDClient().Get<ProductDto>($"v1/Products/get/{id}", sessionToken.ToString())?.Data;
+            var sessionToken = Session["Token"];
+            ProductDto product = new TokenAuthCrudClient().Get<ProductDto>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
             if (product == null)
             {
                 return HttpNotFound();
@@ -147,13 +149,13 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var sessionToken = System.Web.HttpContext.Current.Session["Token"];
-            var response = new ApiCRUDClient().Delete<ProductDto>($"v1/Products/remove/{id}", sessionToken.ToString());
+            var sessionToken = Session["Token"];
+            var response = new TokenAuthCrudClient().Delete<ProductDto>($"v1/Products/remove/{id}", sessionToken.ToString(), Request.UserAgent);
             if (response.Success)
             {
                 return RedirectToAction("Index");
             }
-            return RedirectToAction("Delete", new { id = id} );
+            return RedirectToAction("Delete", new { id = id });
         }
     }
 }

@@ -3,29 +3,43 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h2 class="lead">Token base Auth MVC client to API <a href="http://www.primaryobjects.com/2015/05/08/token-based-authentication-for-web-service-apis-in-c-mvc-net/" class="btn btn-primary btn-sm">Learn more &raquo;</a></h2>
+    <hr />
+    <h5 id="status"></h5>
+    <div style="font-size: 16px;">
+        <p>This is a demo of token-based authentication for a C# ASP .NET MVC web service.</p>
+        <p>Try the following steps:</p>
+        <ol>
+            <li>Click 'Search' without logging in. Notice, you'll get an HTTP 401 error (unauthenticated). Check out the Chrome/Firefox network panel in the debugger for proof.</li>
+            <li>Click 'Login'. Notice, a token key is generated in memory, yet never sent to the server. The key is safely on your own PC.</li>
+            <li>Click 'Search'. This time, the API call succeeds and data is displayed.</li>
+            <li>Open the Chrome/Firefox network panel in the debugger. Click 'Search' a few more times. Notice that each time you click 'Search' a new token is generated and sent to the server.</li>
+            <li>Click 'Logout'. The token key is deleted from memory.</li>
+        </ol>
+    </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <div style="margin: 25px 0 25px 0;">
+            <input id="btnLogin" class="btn btn-default" type="button" value="Login" />
+            <input id="btnLogout" class="btn btn-default" type="button" value="Logout" style="display: none;" />
+        </div>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Search</h2>
+        <div>
+            <input id="txtQuery" type="text" />
+            <input id="btnSearch" class="btn btn-info" type="button" value="Search" />
+        </div>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Results</h2>
+        <div id="result"></div>
     </div>
 </div>
+
+@section scripts
+{
+    <script src="~/Scripts/home.js"></script>
+}

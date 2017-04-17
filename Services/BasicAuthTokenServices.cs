@@ -7,7 +7,7 @@ using Services.DTOs;
 
 namespace Services
 {
-    public class TokenServices : ITokenServices
+    public class BasicAuthTokenServices : IBasicAuthTokenServices
     {
         #region Private member variables.
         private readonly UnitOfWork _unitOfWork;
@@ -17,7 +17,7 @@ namespace Services
         /// <summary>
         /// Public constructor.
         /// </summary>
-        public TokenServices(UnitOfWork unitOfWork)
+        public BasicAuthTokenServices(UnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

@@ -5,30 +5,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
-
 namespace MVC.Common
 {
-    public class ApiCRUDClient
+    public class TokenAuthCrudClient
     {
         /// <summary>
         /// Generic GET API caller
         /// </summary>
         /// <returns></returns>
-        public ApiResponse<T> Get<T>(string url, string token = null) where T : class
+        public ApiResponse<T> Get<T>(string url, string token, string userAgent) where T : class
         {
             var result = new ApiResponse<T>();
             try
             {
                 HttpClient request = null;
-                //if (!token.IsNullOrWhiteSpace())
-                //    request = ConfigureTokenAuthOnlyRequest(token);
-                //else
-                //    request = ConfigureBasicAuthRequest();
 
-                if (!token.IsNullOrWhiteSpace())
-                    request = ApiRequestManager.ConfigureTokenAuthOnlyRequest(token);
+                if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
+                    request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
                 else
-                    return new ApiResponse<T>() { ReasonPhrase = "No token included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
+                    return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
                 using (
                     var response = request.GetAsync(url).ContinueWith((taskWithResponse) =>
@@ -76,18 +71,20 @@ namespace MVC.Common
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="url">Url</param>
         /// <param name="token"></param>
+        /// <param name="userAgent"></param>
         /// <param name="o">Object to post</param>
         /// <returns></returns>
-        public ApiResponse<T> Post<T>(string url, string token, T o) where T : class
+        public ApiResponse<T> Post<T>(string url, string token, string userAgent, T o) where T : class
         {
             var result = new ApiResponse<T>();
             try
             {
                 HttpClient request = null;
-                if (!token.IsNullOrWhiteSpace())
-                    request = ApiRequestManager.ConfigureTokenAuthOnlyRequest(token);
+
+                if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
+                    request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
                 else
-                    return new ApiResponse<T>() { ReasonPhrase = "No token included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
+                    return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
                 //TODO: do check for null bef convert
                 var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
@@ -135,22 +132,85 @@ namespace MVC.Common
         }
 
         /// <summary>
+        /// Non Generic Web API caller for Token validation POST request
+        /// </summary>
+        /// <typeparam name="T">Type of object</typeparam>
+        /// <param name="url">Url</param>
+        /// <param name="token"></param>
+        /// <param name="userAgent"></param>
+        /// <returns></returns>
+        public bool Post(string url, string token, string userAgent)
+        {
+            var authorized = false;
+            try
+            {
+                HttpClient request = null;
+
+                if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
+                    request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
+                else
+                    return authorized;
+
+                using (
+                    var response = request.PostAsync(url, null).ContinueWith((taskWithResponse) =>
+                    {
+
+                        if (taskWithResponse != null)
+                        {
+                            if (taskWithResponse.Status != TaskStatus.RanToCompletion)
+                            {
+                                throw new Exception(
+                                    $"Server error (HTTP {taskWithResponse.Result?.StatusCode}: {taskWithResponse.Exception?.InnerException} : {taskWithResponse.Exception?.Message}).");
+                            }
+                            else if (taskWithResponse.Result.IsSuccessStatusCode)
+                            {
+                                var jsonString = taskWithResponse.Result.Content.ReadAsStringAsync();
+                                jsonString.Wait();
+                                var data = JsonConvert.DeserializeObject(jsonString.Result);
+                                authorized = bool.Parse(data.ToString());
+                            }
+                            else
+                            {
+                                authorized = false;
+                            }
+
+                        }
+
+                    }))
+                {
+                    response.Wait();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                // log exception
+                throw ex;
+
+            }
+            return authorized;
+        }
+
+        /// <summary>
         /// Generic Web API caller for PUT
         /// </summary>
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="url">Url</param>
+        /// <param name="userAgent"></param>
         /// <param name="o">Object to post</param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        public ApiResponse<T> Put<T>(string url, string token, T o) where T : class
+        public ApiResponse<T> Put<T>(string url, string token, string userAgent, T o) where T : class
         {
             var result = new ApiResponse<T>();
             try
             {
                 HttpClient request = null;
-                if (!token.IsNullOrWhiteSpace())
-                    request = ApiRequestManager.ConfigureTokenAuthOnlyRequest(token);
+
+                if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
+                    request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
                 else
-                    return new ApiResponse<T>() { ReasonPhrase = "No token included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
+                    return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
                 var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
@@ -198,17 +258,20 @@ namespace MVC.Common
         /// Generic Web API caller for DELETE
         /// </summary>
         /// <param name="url">Url</param>
+        /// <param name="token"></param>
+        /// <param name="userAgent"></param>
         /// <returns></returns>
-        public ApiResponse<T> Delete<T>(string url, string token) where T : class
+        public ApiResponse<T> Delete<T>(string url, string token, string userAgent) where T : class
         {
             var result = new ApiResponse<T>();
             try
             {
                 HttpClient request = null;
-                if (!token.IsNullOrWhiteSpace())
-                    request = ApiRequestManager.ConfigureTokenAuthOnlyRequest(token);
+                if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
+                    request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
                 else
-                    return new ApiResponse<T>() { ReasonPhrase = "No token included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
+                    return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
+
                 using (
                     var response = request.DeleteAsync(url).ContinueWith((taskWithResponse) =>
                     {

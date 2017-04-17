@@ -13,7 +13,7 @@ namespace WebApi.ActionFilters
     /// On each call, check Session token expiry, if expired, login get new token then call the api
     /// But then everytimes the token expired ... 2 calls would be necessary, login and get token. then call with token
     /// </summary>
-    public class TokenAuthorizationRequiredAttribute : ActionFilterAttribute
+    public class BasicAuthTokenRequiredAttribute : ActionFilterAttribute
     {
         private const string Token = "Token";
 
@@ -21,7 +21,7 @@ namespace WebApi.ActionFilters
         {
             //  Get API key provider
             var provider = filterContext.ControllerContext.Configuration
-                .DependencyResolver.GetService(typeof(ITokenServices)) as ITokenServices;
+                .DependencyResolver.GetService(typeof(IBasicAuthTokenServices)) as IBasicAuthTokenServices;
 
             if (filterContext.Request.Headers.Contains(Token))
             {

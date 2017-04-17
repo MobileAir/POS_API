@@ -8,7 +8,7 @@ using System.Web;
 
 namespace MVC.Common
 {
-    public class ApiRequestManager
+    public class BasicAuthRequestManager
     {
         /// <summary>
         /// Retrieves REST API base URL from configuration file
@@ -45,7 +45,7 @@ namespace MVC.Common
             return request;
         }
 
-        public static HttpClient ConfigureTokenAuthOnlyRequest(string token)
+        public static HttpClient ConfigureTokenReturnAuthRequest(string token)
         {
             var request = new HttpClient();
             request.BaseAddress = new Uri(GetApiBaseUrl());
@@ -56,12 +56,12 @@ namespace MVC.Common
         }
 
         /// <summary>
-        /// Get Token for each Action call if not in session or expired
+        /// BASIC  AUTH : Get Token for each Action call if not in session or expired
         /// </summary>
         /// <returns></returns>
-        public static TokenHeaders RequestToken()
+        public static BasicAuthTokenHeaders RequestToken()
         {
-            var tokenHeaders = new TokenHeaders();
+            var tokenHeaders = new BasicAuthTokenHeaders();
             try
             {
                 var request = ConfigureBasicAuthRequest();

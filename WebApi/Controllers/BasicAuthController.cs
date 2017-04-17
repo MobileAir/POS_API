@@ -9,11 +9,11 @@ using WebApi.Filters;
 namespace WebApi.Controllers
 {
     [ApiBasicAuthenticationFilter] //-> Requires credential Basic Auth
-    public class AuthenticateController : ApiController
+    public class BasicAuthController : ApiController
     {
         #region Private variable.
 
-        private readonly ITokenServices _tokenServices;
+        private readonly IBasicAuthTokenServices _basicAuthTokenServices;
         private readonly IUserServices _userServices;
 
         #endregion
@@ -23,9 +23,9 @@ namespace WebApi.Controllers
         /// <summary>
         /// Public constructor to initialize product service instance
         /// </summary>
-        public AuthenticateController(ITokenServices tokenServices, IUserServices userServices)
+        public BasicAuthController(IBasicAuthTokenServices basicAuthTokenServices, IUserServices userServices)
         {
-            _tokenServices = tokenServices;
+            _basicAuthTokenServices = basicAuthTokenServices;
             _userServices = userServices;
         }
 
@@ -60,7 +60,7 @@ namespace WebApi.Controllers
         /// <returns></returns>
         private HttpResponseMessage GetAuthToken(int userId)
         {
-            var token = _tokenServices.GenerateToken(userId);
+            var token = _basicAuthTokenServices.GenerateToken(userId);
             var response = Request.CreateResponse(HttpStatusCode.OK, "Authorized");
             response.Headers.Add("Token", token.AuthToken);
             response.Headers.Add("TokenIssuedOn", token.IssuedOn.ToString("F"));

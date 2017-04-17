@@ -128,14 +128,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Common\ApiRequestManager.cs" />
-    <Compile Include="Common\TokenHeaders.cs" />
+    <Compile Include="Attributes\ApiTokenAuthorizeAttribute.cs" />
+    <Compile Include="Common\BasicAuthRequestManager.cs" />
+    <Compile Include="Common\TokenAuthCrudClient.cs" />
+    <Compile Include="Common\TokenAuthRequestManager.cs" />
+    <Compile Include="Common\BasicAuthTokenHeaders.cs" />
     <Compile Include="Common\ApiResponse.cs" />
-    <Compile Include="Common\ApiCRUDClient.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Common\BasicAuthCrudClient.cs" />
+    <Compile Include="Common\TokenAuthSecurityManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\IpController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -154,6 +158,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -164,6 +169,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\security.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -187,9 +193,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Login\" />
-    <Folder Include="Views\Resource\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public interface ITokenServices
+    public interface IBasicAuthTokenServices
     {
         #region Interface member methods.
         /// <summary>

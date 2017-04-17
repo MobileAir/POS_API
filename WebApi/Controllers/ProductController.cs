@@ -7,11 +7,11 @@ using System.Web.Http.OData;
 using Services;
 using Services.DTOs;
 using WebApi.ActionFilters;
-using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
-    [TokenAuthorizationRequired] // Should be applied manually on controllers or use can be use at action level -> this check first if have a token then valid token
+    [TokenAuthRequired]
+    //[BasicAuthTokenRequired] // Should be applied manually on controllers or use can be use at action level -> this check first if have a token then valid token
     //ApiBasicAuthenticationFilter: Can be applied in Global.asax for all Controllers => GlobalConfiguration.Configuration.Filters.Add(new ApiAuthenticationFilter());
     //[ApiBasicAuthenticationFilter] // This is Basic Auth only for every req. cal also be used as a Fallback from client. Will try get resource directly Basic Auth and no token header. 
     [RoutePrefix("v1/Products")]
