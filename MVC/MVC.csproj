@@ -144,6 +144,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ThemeViewEngine.cs" />
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProductVm.cs" />
@@ -190,9 +191,14 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Themes\Material\Home\Index.cshtml" />
+    <Content Include="Views\Themes\Material\_ViewStart.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_Layout.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Theme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

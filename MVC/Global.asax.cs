@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
+﻿using System.Configuration;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using MVC.Infrastructure;
 
 namespace MVC
 {
@@ -14,6 +10,12 @@ namespace MVC
     {
         protected void Application_Start()
         {
+            if (!string.IsNullOrEmpty(ConfigurationManager.AppSettings["ActiveTheme"]))
+            {
+                var activeTheme = ConfigurationManager.AppSettings["ActiveTheme"];
+                ViewEngines.Engines.Insert(0, new ThemeViewEngine(activeTheme));
+            };
+
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
