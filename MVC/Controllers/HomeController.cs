@@ -26,5 +26,12 @@ namespace MVC.Controllers
 
             return View();
         }
+
+        public ActionResult Dashboard()
+        {
+            ViewBag.Message = "Dashboard.";
+
+            return View();
+        }
     }
 }

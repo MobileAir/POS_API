@@ -152,12 +152,60 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Theme\Material\css\bootstrap.min.css" />
+    <Content Include="Content\Theme\Material\css\demo.css" />
+    <Content Include="Content\Theme\Material\css\material-dashboard.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Theme\Material\apple-icon.png" />
+    <Content Include="Images\Theme\Material\cover.jpeg" />
+    <Content Include="Images\Theme\Material\faces\marc.jpg" />
+    <Content Include="Images\Theme\Material\favicon.png" />
+    <Content Include="Images\Theme\Material\mask.png" />
+    <Content Include="Images\Theme\Material\new_logo.png" />
+    <Content Include="Images\Theme\Material\sidebar-1.jpg" />
+    <Content Include="Images\Theme\Material\sidebar-2.jpg" />
+    <Content Include="Images\Theme\Material\sidebar-3.jpg" />
+    <Content Include="Images\Theme\Material\sidebar-4.jpg" />
+    <Content Include="Images\Theme\Material\tim_80x80.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\Theme\Material\sass\material-dashboard.scss" />
+    <Content Include="Content\Theme\Material\sass\md\.DS_Store" />
+    <Content Include="Content\Theme\Material\sass\md\mixins\_chartist.scss" />
+    <Content Include="Content\Theme\Material\sass\md\mixins\_transparency.scss" />
+    <Content Include="Content\Theme\Material\sass\md\mixins\_vendor-prefixes.scss" />
+    <Content Include="Content\Theme\Material\sass\md\plugins\_animate.scss" />
+    <Content Include="Content\Theme\Material\sass\md\plugins\_plugin-nouislider.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_alerts.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_buttons.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_cards.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_chartist.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_checkboxes.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_colors.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_dialogs.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_dropdown.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_footers.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_forms.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_inputs-size.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_inputs.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_misc.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_mixins.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_navbars.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_pills.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_popups.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_radios.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_responsive.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_ripples.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_shadows.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_sidebar-and-main-panel.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_tables.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_tabs.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_togglebutton.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_typography.scss" />
+    <Content Include="Content\Theme\Material\sass\md\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -171,6 +219,13 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\security.js" />
+    <Content Include="Scripts\Theme\Material\bootstrap-notify.js" />
+    <Content Include="Scripts\Theme\Material\bootstrap.min.js" />
+    <Content Include="Scripts\Theme\Material\chartist.min.js" />
+    <Content Include="Scripts\Theme\Material\demo.js" />
+    <Content Include="Scripts\Theme\Material\jquery-3.1.0.min.js" />
+    <Content Include="Scripts\Theme\Material\material-dashboard.js" />
+    <Content Include="Scripts\Theme\Material\material.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -195,10 +250,10 @@
     <Content Include="Views\Themes\Material\_ViewStart.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_Layout.cshtml" />
     <Content Include="Views\Themes\Material\Shared\Error.cshtml" />
+    <Content Include="Views\Themes\Material\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Theme\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
