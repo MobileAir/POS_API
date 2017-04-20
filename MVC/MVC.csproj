@@ -129,7 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\ApiTokenAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\TestFilter.cs" />
+    <Compile Include="Attributes\TokenAuthCheckAttribute.cs" />
     <Compile Include="Common\BasicAuthRequestManager.cs" />
     <Compile Include="Common\TokenAuthCrudClient.cs" />
     <Compile Include="Common\TokenAuthRequestManager.cs" />

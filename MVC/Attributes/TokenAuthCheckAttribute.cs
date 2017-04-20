@@ -4,7 +4,7 @@ using Microsoft.Ajax.Utilities;
 
 namespace MVC.Attributes
 {
-    public class TokenAuthCheckAttibute : ActionFilterAttribute
+    public class TokenAuthCheckAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
