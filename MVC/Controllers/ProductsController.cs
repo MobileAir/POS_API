@@ -9,6 +9,7 @@ using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
+    [TokenAuthCheck]
     public class ProductsController : Controller
     {
         // GET: Products
@@ -21,24 +22,18 @@ namespace MVC.Controllers
                 var p = (ProductVm)TempData["Model"];
                 ViewBag.Product = $"Success data change to {p.name}";
             }
-
-            var sessionToken = Session["Token"];
-            if (sessionToken != null && !sessionToken.ToString().IsNullOrWhiteSpace())
+            var r = new TokenAuthCrudClient().Get<List<ProductVm>>("v1/Products/all", Session["Token"].ToString(), Request.UserAgent);
+            products = r?.Data;
+            if (products == null)
             {
-                var r = new TokenAuthCrudClient().Get<List<ProductVm>>("v1/Products/all", sessionToken.ToString(), Request.UserAgent);
-                products = r?.Data;
-                if (products == null)
+                // Get - Debug basic error  info - basic handliing better should be done
+                if (r?.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    // Get - Debug basic error  info - basic handliing better should be done
-                    if (r?.StatusCode == HttpStatusCode.Unauthorized)
-                    {
-                        return new HttpUnauthorizedResult(r?.ReasonPhrase);
-                    }
-                    return HttpNotFound(r?.Exception ?? "Response was null");
+                    return new HttpUnauthorizedResult(r?.ReasonPhrase);
                 }
-                return View(products);
+                return HttpNotFound(r?.Exception ?? "Response was null");
             }
-            return new HttpUnauthorizedResult("Not auth - please try again"); // redirect login or somehting;
+            return View(products);
         }
 
         // GET: Products/Details/5
