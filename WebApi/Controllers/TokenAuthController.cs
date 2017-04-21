@@ -2,10 +2,12 @@
 using System.Net.Http;
 using System.Web.Http;
 using WebApi.ActionFilters;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
-    [TokenAuthRequired]
+    [TokenAuthorize]
+    //[TokenAuthRequired] // old way... not really correct since action filter would kick in after model binder.... model binding should not occurs if not auth
     public class TokenAuthController : ApiController
     {
 

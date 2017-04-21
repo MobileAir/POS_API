@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Net;
 using System.Web.Mvc;
 using MVC.Attributes;
@@ -15,6 +17,8 @@ namespace MVC.Controllers
         public ActionResult Index(string data = null)
         {
             List<ProductVm> products = null;
+
+            //var throwE = int.Parse("hahahahaha");
 
             if (data != null && TempData["Model"] != null)
             {

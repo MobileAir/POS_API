@@ -39,6 +39,9 @@ namespace WebApi.ActionFilters
                             .ToString();
                     var userAgent = filterContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
 
+                    //HTTP_CLIENT_USER_AGENT
+                    //var userAgent = ((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.Params["HTTP_CLIENT_USER_AGENT"];
+
                     // Validate Token
                     if (provider != null && !ip.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, ip, userAgent))
                     {
@@ -56,6 +59,7 @@ namespace WebApi.ActionFilters
             catch (Exception e)
             {
                 // log e
+                // TODO: Should not use Try/catch for logic execution! What if this would throw e as wel... then it would dump a huge error revealing lot of info
                 filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
             }
 
