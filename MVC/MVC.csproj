@@ -129,7 +129,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Attributes\ApiTokenAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\TokenAuthCheckAttribute.cs" />
     <Compile Include="Common\BasicAuthRequestManager.cs" />
     <Compile Include="Common\TokenAuthCrudClient.cs" />
     <Compile Include="Common\TokenAuthRequestManager.cs" />
@@ -143,6 +142,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Filters\ExceptionLoggingFilter.cs" />
+    <Compile Include="Filters\TokenAuthCheckFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

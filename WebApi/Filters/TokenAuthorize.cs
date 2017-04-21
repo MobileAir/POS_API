@@ -13,6 +13,7 @@ namespace WebApi.Filters
     public class TokenAuthorize : AuthorizationFilterAttribute
     {
         private const string Token = "Token";
+        private const string ClientUserAgent = "Client-User-Agent";
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
@@ -29,9 +30,8 @@ namespace WebApi.Filters
                     var ip =
                         IPAddress.Parse(((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
                             .ToString();
-
-                    //HTTP_CLIENT_USER_AGENT
-                    var userAgent = ((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.Params["HTTP_CLIENT_USER_AGENT"];
+                    
+                    var userAgent = actionContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
 
                     // Validate Token
                     if (provider != null && !ip.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, ip, userAgent))

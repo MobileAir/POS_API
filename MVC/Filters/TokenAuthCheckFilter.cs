@@ -1,10 +1,10 @@
-﻿using System.Web;
+using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 
-namespace MVC.Attributes
+namespace MVC.Filters
 {
-    public class TokenAuthCheckAttribute : ActionFilterAttribute
+    public class TokenAuthCheckFilter : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

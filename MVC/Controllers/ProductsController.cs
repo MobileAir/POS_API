@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Net;
 using System.Web.Mvc;
-using MVC.Attributes;
+using MVC.Filters;
 using MVC.Common;
 using MVC.Models;
 using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
-    [TokenAuthCheck]
+    [TokenAuthCheckFilter]
     public class ProductsController : Controller
     {
         // GET: Products
