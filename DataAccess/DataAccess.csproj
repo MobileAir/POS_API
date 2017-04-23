@@ -55,6 +55,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="GenericRepository\GenericRepository.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Payment.cs" />
     <Compile Include="Models\PaymentMethod.cs" />
     <Compile Include="Models\Product.cs" />

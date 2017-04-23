@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         //[EnableQuery(PageSize = 500)] // [EnableQuery()] : transform the Odata query into LINQ. LinQ to Entities in this instance
         public HttpResponseMessage Get()
         {
-            //int throwE = int.Parse("puhahahhahhha");
+            int throwE = int.Parse("puhahahhahhha");
             var products = _productServices.GetAll().AsQueryable();
             if (products != null)
             {

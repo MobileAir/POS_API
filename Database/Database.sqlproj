@@ -73,6 +73,7 @@
     <Build Include="dbo\Tables\Tokens.sql" />
     <Build Include="dbo\Tables\Users.sql" />
     <Build Include="dbo\Tables\ProductsTransactions.sql" />
+    <Build Include="dbo\Tables\Errors.sql" />
     <Build Include="Security\POS_Admin.sql" />
     <Build Include="Security\POS_Admin_1.sql" />
     <Build Include="Security\RoleMemberships.sql" />

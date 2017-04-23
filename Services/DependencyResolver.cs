@@ -13,6 +13,7 @@ namespace Services
             registerComponent.RegisterType<IUserServices, UserServices>();
             registerComponent.RegisterType<IBasicAuthTokenServices, BasicAuthTokenServices>();
             registerComponent.RegisterType<ITokenAuthServices, TokenAuthServices>();
+            registerComponent.RegisterType<IErrorServices, ErrorServices>();
         }
     }
 }

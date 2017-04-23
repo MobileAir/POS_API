@@ -20,6 +20,7 @@ namespace DataAccess
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<Transaction> Transactions { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Error> Errors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
