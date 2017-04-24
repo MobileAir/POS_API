@@ -139,6 +139,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IpController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Filters\ExceptionLoggingFilter.cs" />
@@ -253,6 +254,10 @@
     <Content Include="Views\Themes\Material\Shared\_Layout.cshtml" />
     <Content Include="Views\Themes\Material\Shared\Error.cshtml" />
     <Content Include="Views\Themes\Material\Home\Dashboard.cshtml" />
+    <Content Include="Views\Sale\Index.cshtml" />
+    <Content Include="Views\Themes\Material\Sale\Index.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_ContentNav.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_Sidebar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

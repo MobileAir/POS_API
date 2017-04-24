@@ -39,7 +39,12 @@
         </div>
     </div>
     <div class="">
-        @RenderBody()
+        <div class="wrapper" style="margin-top: 73px;">
+
+            @* ReSharper disable once Mvc.PartialViewNotResolved *@
+            @Html.Partial("_Sidebar")
+            @RenderBody()
+        </div>
 
         <footer class="footer">
             <div class="container-fluid">

@@ -34,15 +34,22 @@ namespace MVC.Filters
             
             // post to WEB api? maybe later
 
-            //Send an email notification -> can use smtp4dev
-            MailMessage email = new MailMessage();
-            email.From = new MailAddress("Client@PDV.com");
-            email.To.Add(new MailAddress(ConfigurationManager.AppSettings["ErrorEmail"]));
-            email.Subject = $"Error @ {ConfigurationManager.AppSettings["ClientName"]}";
-            email.Body = filterContext.Exception.Message + Environment.NewLine
-                + filterContext.Exception.StackTrace;
-            SmtpClient client = new SmtpClient("localhost");
-            client.Send(email);
+            try
+            {
+                //Send an email notification -> can use smtp4dev
+                MailMessage email = new MailMessage();
+                email.From = new MailAddress("Client@PDV.com");
+                email.To.Add(new MailAddress(ConfigurationManager.AppSettings["ErrorEmail"]));
+                email.Subject = $"Error @ {ConfigurationManager.AppSettings["ClientName"]}";
+                email.Body = filterContext.Exception.Message + Environment.NewLine
+                             + filterContext.Exception.StackTrace;
+                SmtpClient client = new SmtpClient("localhost");
+                client.Send(email);
+            }
+            catch (Exception e)
+            {
+                // email could not be sent...
+            }
         }
     }
 
