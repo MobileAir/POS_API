@@ -1,10 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
 }
-
-
 
 <div class="main-panel">
     @* ReSharper disable once Mvc.PartialViewNotResolved *@
@@ -15,154 +12,60 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header" data-background-color="purple">
-                            <h4 class="title">Edit Profile</h4>
-                            <p class="category">Complete your profile</p>
+                            <h4 class="title">Receipt</h4>
+                            @*<p class="category">Total...taxes...payment..products</p>*@
                         </div>
                         <div class="card-content">
                             <form>
                                 <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Company (disabled)</label>
-                                            <input type="text" class="form-control" disabled>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Username</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Email address</label>
-                                            <input type="email" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Fist Name</label>
-                                            <input type="text" class="form-control">
+                                            <address>
+                                                <strong>Elf Cafe</strong>
+                                                <br>
+                                                2135 Sunset Blvd
+                                                <br>
+                                                Los Angeles, CA 90026
+                                                <br>
+                                                <abbr title="Phone">P:</abbr> (213) 484-6829
+                                            </address>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Last Name</label>
-                                            <input type="text" class="form-control">
+                                        <div class="form-group label-floating pull-right">
+                                            <p>
+                                                <em>Date: April 24th, 2017</em>
+                                            </p>
+                                            <p>
+                                                <em>Receipt #: 34522677W</em>
+                                            </p>
+                                            <address>
+                                                <strong>Payment Method:</strong><br>
+                                                Visa ending **** 4242
+                                            </address>
                                         </div>
                                     </div>
                                 </div>
 
+                                
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Adress</label>
-                                            <input type="text" class="form-control">
-                                        </div>
+                                        @* ReSharper disable once Mvc.PartialViewNotResolved *@
+                                        @Html.Partial("_Receipt")
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">City</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Country</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Postal Code</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>About Me</label>
-                                            <div class="form-group label-floating">
-                                                <label class="control-label"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                                <textarea class="form-control" rows="5"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+                                @*<button type="submit" class="btn btn-primary pull-right"><i class="material-icons">done</i><div class="ripple-container"></div></button>*@
+                                <button type="button" class="btn btn-raised btn-primary pull-right" onclick=""><i class="material-icons">done</i><div class="ripple-container"></div></button>
                                 <div class="clearfix"></div>
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    
-                    <!-- TODO move to Partial...-->
-                    <style>
-                        .content a {
-                            height: 70px;
-                            width: 22%;
-                        }
-                    </style>
+                    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+                    @Html.Partial("_NumPad")
 
-                    <div class="card card-profile">
-                        <div class="card-header" data-background-color="blue">
-                            <h4 class="title">Total</h4>
-                            <p class="category">Shuld be static and prod scroll</p>
-                        </div>
-
-                        <div class="content">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <div class="form-group label-floating">
-                                        <textarea class="form-control" rows="5"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12">
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">AC</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">+/-</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">%</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">/</a>
-                            </div>
-                            <div class="col-md-12">
-
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">7&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">8&nbsp;&nbsp; </a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">9 </a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">X </a>
-                            </div>
-                            <div class="col-md-12">
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">4&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">5&nbsp;&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">6</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">-</a>
-                            </div>
-                            <div class="col-md-12">
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">1&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">2&nbsp;&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">3</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">+</a>
-                            </div>
-                            <div class="col-md-12">
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">0&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">00&nbsp;</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">.</a>
-                                <a href="javascript:void(0)" class="btn btn-raised btn-info">=</a>
-                            </div>
-
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

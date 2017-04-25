@@ -258,6 +258,8 @@
     <Content Include="Views\Themes\Material\Sale\Index.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_ContentNav.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_NumPad.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
