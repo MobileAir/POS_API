@@ -20,7 +20,7 @@ var SecurityManager = {
 
         // TODO: use custom routes
         var uri =
-            '/user/login?username=' + SecurityManager.username + '&password=' + password
+            '/user/signin?username=' + SecurityManager.username + '&password=' + password
                 + '&ip=' + SecurityManager.ip + '&userAgent=' + userAgent + '&ticks=' + ticks;
 
         // Persist key pieces.
@@ -40,7 +40,7 @@ var SecurityManager = {
         localStorage.removeItem('SecurityManager.ip');
         SecurityManager.ip = null;
 
-        $.get('user/logout', function () {
+        $.get('user/signout', function () {
             alert('User logged out!');
         }).fail(function (error) {
             alert('HTTP Error ' + error.status);
@@ -51,7 +51,7 @@ var SecurityManager = {
         var result = '';
 
         $.ajax({
-            url: '/ip',
+            url: 'station/ip',
             method: 'GET',
             async: false,
             success: function (ip) {

@@ -14,7 +14,7 @@ namespace DataAccess.Models
         public int ID { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(200)]
         public string Name { get; set; }
         
         public virtual ICollection<ProductsTransaction> ProductsTransactions { get; set; }

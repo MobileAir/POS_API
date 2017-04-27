@@ -8,7 +8,7 @@ namespace MVC.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if(HttpContext.Current.Session["Token"] !=null && HttpContext.Current.Session["Token"].ToString().IsNullOrWhiteSpace())
+            if(HttpContext.Current.Session["Token"] == null || (HttpContext.Current.Session["Token"] !=null && HttpContext.Current.Session["Token"].ToString().IsNullOrWhiteSpace()))
                 filterContext.Result = new HttpUnauthorizedResult("The request does not have an authorized session...");
         }
     }

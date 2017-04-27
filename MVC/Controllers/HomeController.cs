@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace MVC.Controllers
 {
     public class HomeController : Controller
     {
+        [Route("")]
         public ActionResult Index()
         {
             return View();
@@ -27,6 +24,7 @@ namespace MVC.Controllers
             return View();
         }
 
+        [Route("dashboard")]
         public ActionResult Dashboard()
         {
             ViewBag.Message = "Dashboard.";

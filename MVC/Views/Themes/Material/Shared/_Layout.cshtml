@@ -18,7 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 50px;">
+    @*<div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 50px;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -31,15 +31,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                    <li><a href="/dashboard">Dashboard</a> </li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li class="pull-right">@Html.ActionLink("Products", "Index", "Products")</li>
                 </ul>
             </div>
         </div>
-    </div>
+    </div>*@
     <div class="">
-        <div class="wrapper" style="margin-top: 73px;">
+        <div class="wrapper" @*style="margin-top: 73px;"*@>
 
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
             @Html.Partial("_Sidebar")

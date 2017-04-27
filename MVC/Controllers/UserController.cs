@@ -3,11 +3,13 @@ using MVC.Common;
 
 namespace MVC.Controllers
 {
+    [RoutePrefix("user")]
     public class UserController : Controller
     {
         private const string SecurityToken = "Token";
 
         // GET: Login
+        [Route("signin")]
         [HttpGet]
         public ActionResult Login(string username, string password, string ip, string userAgent, long ticks)
         {
@@ -21,6 +23,7 @@ namespace MVC.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Route("signout")]
         public ActionResult Logout()
         {
             Session.Remove(SecurityToken);

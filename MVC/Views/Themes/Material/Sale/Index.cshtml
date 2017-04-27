@@ -1,6 +1,8 @@
-﻿@{
+﻿@model IEnumerable<MVC.ViewModels.ProductVm>
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
+    var rowCount = 1;
 }
 
 <div class="main-panel">
@@ -10,59 +12,49 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header" data-background-color="purple">
-                            <h4 class="title">Receipt</h4>
-                            @*<p class="category">Total...taxes...payment..products</p>*@
-                        </div>
-                        <div class="card-content">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group label-floating">
-                                            <address>
-                                                <strong>Elf Cafe</strong>
-                                                <br>
-                                                2135 Sunset Blvd
-                                                <br>
-                                                Los Angeles, CA 90026
-                                                <br>
-                                                <abbr title="Phone">P:</abbr> (213) 484-6829
-                                            </address>
+                    @*<div class="row">*@
+
+                    @foreach (var item in Model)
+                    {
+
+                        if (rowCount % 4 == 0){
+                             @:<div class="row">
+                        }
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <div class="card card-stats">
+                                        <div class="card-header" data-background-color="orange">
+                                            <i class="material-icons">add</i>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group label-floating pull-right">
-                                            <p>
-                                                <em>Date: April 24th, 2017</em>
+                                        <div class="card-content">
+                                            <p class="category">
+                                                <small>$</small>74.99
                                             </p>
-                                            <p>
-                                                <em>Receipt #: 34522677W</em>
-                                            </p>
-                                            <address>
-                                                <strong>Payment Method:</strong><br>
-                                                Visa ending **** 4242
-                                            </address>
+                                            <h5 class="title">
+                                                @item.name
+                                            </h5>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="stats">
+                                                <i class="material-icons text-danger">warning</i> <a href="#pablo">25% off</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        @* ReSharper disable once Mvc.PartialViewNotResolved *@
-                                        @Html.Partial("_Receipt")
-                                    </div>
-                                </div>
-
-                                @*<button type="submit" class="btn btn-primary pull-right"><i class="material-icons">done</i><div class="ripple-container"></div></button>*@
-                                <button type="button" class="btn btn-raised btn-primary pull-right" onclick=""><i class="material-icons">done</i><div class="ripple-container"></div></button>
-                                <div class="clearfix"></div>
-                            </form>
-                        </div>
-                    </div>
+                                if (rowCount % 4 == 0)
+                                {
+                                    @:</div>
+                                }
+                            
+                        {
+                            rowCount++;
+                        }
+                    }
+                    }
+                    @*</div>*@
                 </div>
                 <div class="col-md-4">
+                    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+                    @Html.Partial("_Receipt")
                     @* ReSharper disable once Mvc.PartialViewNotResolved *@
                     @Html.Partial("_NumPad")
 

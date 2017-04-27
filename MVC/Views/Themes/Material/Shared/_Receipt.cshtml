@@ -13,56 +13,106 @@
 </style>
 <div class="card">
     <div class="card-header" data-background-color="purple">
-        <h4 class="title">Order Summary</h4>
-        @*<p class="category">Here is a subtitle for this table</p>*@
+        <h4 class="title">Receipt</h4>
+        @*<p class="category">Total...taxes...payment..products</p>*@
     </div>
-    <div class="card-content table-responsive">
-        <table class="table">
-            <thead class="text-primary">
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th class="text-right">Total</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Matcha Latte</td>
-                    <td class="text-primary">$6,73</td>
-                    <td>2</td>
-                    <td class="text-primary text-right">$12,99</td>
-                </tr>
-                <tr>
-                    <td>Banana Loaf</td>
-                    <td class="text-primary">$3,73</td>
-                    <td>2</td>
-                    <td class="text-primary text-right">$6,99</td>
-                </tr>
-                <tr>
-                    <td>Pumpkin Latte</td>
-                    <td class="text-primary">$6,73</td>
-                    <td>1</td>
-                    <td class="text-primary text-right">$6,73</td>
-                </tr>
-                <tr>
-                    <td class="thick-line"></td>
-                    <td class="thick-line"></td>
-                    <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                    <td class="thick-line text-right">$70.99</td>
-                </tr>
-                <tr>
-                    <td class="no-line"></td>
-                    <td class="no-line"></td>
-                    <td class="no-line text-center"><strong>Taxes(TVO 12.5%)</strong></td>
-                    <td class="no-line text-right">$15.12</td>
-                </tr>
-                <tr>
-                    <td class="no-line"></td>
-                    <td class="no-line"></td>
-                    <td class="no-line text-center"><strong>Total</strong></td>
-                    <td class="no-line text-right">$85.99</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="card-content">
+        <form>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group label-floating">
+                        <address>
+                            <strong>Elf Cafe</strong>
+                            <br>
+                            2135 Sunset Blvd
+                            <br>
+                            Los Angeles, CA 90026
+                            <br>
+                            <abbr title="Phone">P:</abbr> (213) 484-6829
+                        </address>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group label-floating pull-right">
+                        <p>
+                            <em>Date: April 24th, 2017</em>
+                        </p>
+                        <p>
+                            <em>Receipt #: 34522677W</em>
+                        </p>
+                        <address>
+                            <strong>Payment Method:</strong><br>
+                            Visa ending **** 4242
+                        </address>
+                    </div>
+                </div>
+            </div>
 
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" data-background-color="purple">
+                            <h4 class="title">Order Summary</h4>
+                            @*<p class="category">Here is a subtitle for this table</p>*@
+                        </div>
+                        <div class="card-content table-responsive">
+                            <table class="table">
+                                <thead class="text-primary">
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th class="text-right">Total</th>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Matcha Latte</td>
+                                        <td class="text-primary">$6,73</td>
+                                        <td>2</td>
+                                        <td class="text-primary text-right">$12,99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Banana Loaf</td>
+                                        <td class="text-primary">$3,73</td>
+                                        <td>2</td>
+                                        <td class="text-primary text-right">$6,99</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pumpkin Latte</td>
+                                        <td class="text-primary">$6,73</td>
+                                        <td>1</td>
+                                        <td class="text-primary text-right">$6,73</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line"></td>
+                                        <td class="thick-line text-center"><strong>Subtotal</strong></td>
+                                        <td class="thick-line text-right">$70.99</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-center"><strong>Taxes(TVO 12.5%)</strong></td>
+                                        <td class="no-line text-right">$15.12</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="no-line"></td>
+                                        <td class="no-line"></td>
+                                        <td class="no-line text-center"><strong>Total</strong></td>
+                                        <td class="no-line text-right">$85.99</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*<button type="submit" class="btn btn-primary pull-right"><i class="material-icons">done</i><div class="ripple-container"></div></button>*@
+            <button type="button" class="btn btn-raised btn-primary pull-right" onclick=""><i class="material-icons">done</i><div class="ripple-container"></div></button>
+            <div class="clearfix"></div>
+        </form>
     </div>
 </div>
+

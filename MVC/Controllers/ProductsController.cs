@@ -11,9 +11,11 @@ using MVC.ViewModels;
 namespace MVC.Controllers
 {
     [TokenAuthCheckFilter]
+    [RoutePrefix("products")]
     public class ProductsController : Controller
     {
         // GET: Products
+        [Route("all")]
         public ActionResult Index(string data = null)
         {
             List<ProductVm> products = null;

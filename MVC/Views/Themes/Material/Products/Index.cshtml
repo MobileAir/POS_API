@@ -1,0 +1,45 @@
+﻿@model IEnumerable<MVC.ViewModels.ProductVm>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
+    var data = "";
+    if (ViewBag.Product != null)
+    {
+        data = ViewBag.Product;
+    }
+}
+
+<div class="main-panel">
+    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+    @Html.Partial("_ContentNav")
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div class="card card-stats">
+                            <div class="card-header" data-background-color="orange">
+                                <i class="material-icons">add</i>
+                            </div>
+                            <div class="card-content">
+                                <p class="category"><small>$</small>74.99</p>
+                                <h3 class="title">
+                                    @item.name
+                                </h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="stats">
+                                    <i class="material-icons text-danger">warning</i> <a href="#pablo">25% off</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

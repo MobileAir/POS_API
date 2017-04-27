@@ -260,6 +260,7 @@
     <Content Include="Views\Themes\Material\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_NumPad.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_Receipt.cshtml" />
+    <Content Include="Views\Themes\Material\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,7 +291,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59727</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:59727/</IISUrl>
+          <IISUrl>http://localhost:59727</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
