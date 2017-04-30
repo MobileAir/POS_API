@@ -13,7 +13,7 @@ namespace MVC.Controllers
     {
         // GET: Sale
         [Route("sale")]
-        public ActionResult Index(string data = null)
+        public ActionResult Sale(string data = null)
         {
             List<ProductVm> products = null;
 
@@ -31,7 +31,7 @@ namespace MVC.Controllers
                 // Get - Debug basic error  info - basic handliing better should be done
                 if (r?.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    return new HttpUnauthorizedResult(r?.ReasonPhrase);
+                    return RedirectToAction("Index", "Home"); //new HttpUnauthorizedResult(r?.ReasonPhrase);
                 }
                 return HttpNotFound(r?.Exception ?? "Response was null");
             }

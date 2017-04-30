@@ -5,7 +5,8 @@ namespace MVC.Controllers
     public class HomeController : Controller
     {
         [Route("")]
-        public ActionResult Index()
+        [Route("home")]
+        public ActionResult Home()
         {
             return View();
         }

@@ -20,7 +20,7 @@ namespace MVC.Controllers
             var authorized = client.Post("token/validate", token, Request.UserAgent);
             if (!authorized)
                 return new HttpUnauthorizedResult("Not auth - please try again"); // redirect login or somehting;
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
         }
 
         [Route("signout")]
@@ -30,7 +30,7 @@ namespace MVC.Controllers
             Session.Clear(); // Removes all keys and values from the session-state collection.
             Session.Abandon(); // you lose that specific session and the user will get a new session key. You could use it for example when the user logs out.
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Home", "Home");
         }
 
     }

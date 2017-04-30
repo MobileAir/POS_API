@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .input-code {
+        text-align: center !important;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+<div class="main-panel">
+
+    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+    @Html.Partial("_ContentNav")
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header" data-background-color="purple">
+                            <h4 class="title">Sign In</h4>
+                            <p class="category">Enter your Access Code and PIN</p>
+                        </div>
+                        <div class="card-content">
+                            <form>
+
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Access Code</label>
+                                            <input type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Pin</label>
+                                            <input type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button id="btn-login" type="submit" class="btn btn-primary pull-right">Sign In</button>
+                                <button id="btn-logout" type="submit" class="btn btn-primary pull-right">Sign Out</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <a href="#pablo">
+                                <img class="img" src="~/Images/Theme/Material/tim_80x80.png" />
+                            </a>
+                        </div>
+
+                        <div class="content">
+                            <h6 id="role" class="category text-gray">CEO / Co-Founder</h6>
+                            <h4 id="status" class="card-title">Alec Thompson</h4>
+                            <p class="card-content">
+                                “When you innovate, you’ve got to be prepared for people telling you that you are nuts,” says Larry Ellison, the founder of Oracle.
+                                “Never give up. Today is hard, tomorrow will be worse, but the day after tomorrow will be sunshine,” says Jack Ma, the founder of the Chinese ecommerce megaloth Alibaba.
+                            </p>
+                            <a href="/tile/sale" class="btn btn-primary">Go to Sale</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/Theme/Material/home.js"></script>
+    <script>
+        $(function () {
+            //$(".sign-in-inputs").click(function () {
+            //    //$('#num-pad').dialog('open');
+            //    $('#num-pad').toggle();
+            //    return false;
+            //});
+        });
+    </script>
+}
