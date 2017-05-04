@@ -148,6 +148,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ThemeViewEngine.cs" />
+    <Compile Include="Models\LoginVm.cs" />
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProductVm.cs" />

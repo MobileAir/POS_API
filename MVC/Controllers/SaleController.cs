@@ -31,7 +31,7 @@ namespace MVC.Controllers
                 // Get - Debug basic error  info - basic handliing better should be done
                 if (r?.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    return RedirectToAction("Index", "Home"); //new HttpUnauthorizedResult(r?.ReasonPhrase);
+                    return new HttpUnauthorizedResult(r?.ReasonPhrase);// RedirectToAction("Home", "Home"); //new HttpUnauthorizedResult(r?.ReasonPhrase);
                 }
                 return HttpNotFound(r?.Exception ?? "Response was null");
             }

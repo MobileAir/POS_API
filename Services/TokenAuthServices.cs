@@ -9,7 +9,7 @@ namespace Services
     {
         #region Private member variables.
         private readonly UnitOfWork _unitOfWork;
-        private const string _alg = "HmacSHA512";
+        private const string _alg = "HmacSHA256";
         private static int _expirationMinutes = 10; // TODO:  should be in config or db
         #endregion
 
@@ -95,7 +95,7 @@ namespace Services
             string hashLeft = "";
             string hashRight = "";
 
-            using (HMAC hmac = HMACSHA512.Create(_alg))
+            using (HMAC hmac = HMACSHA256.Create(_alg))
             {
                 hmac.Key = Encoding.UTF8.GetBytes(password); // Already hashed in db !! => Encoding.UTF8.GetBytes(GetHashedPassword(password));
                 hmac.ComputeHash(Encoding.UTF8.GetBytes(hash));

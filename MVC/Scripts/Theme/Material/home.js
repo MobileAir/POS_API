@@ -6,16 +6,50 @@
         $('#btn-login').css("display", "none");
         $('#btn-logout').css("display", "inline");
     }
+    else {
+        $('#btn-login').css("display", "inline");
+        $('#btn-logout').css("display", "none");
+    }
 
     // Button click events.
     $('#btn-login').click(function () {
         // Login as the user and create a token key.
-        var uri = SecurityManager.generateUri('adminToken', 'AdminWebApiDi');
+        //var uri = SecurityManager.generateUri('adminToken', 'AdminWebApiDi');
+        //$.ajax({
+        //    url: uri,
+        //    type: "GET", // TODO change to post and poass token as data : {token:token}
+        //    async: true, 
+        //    success: function (data) {
+        //        //alert('User logged in!');
+        //        //window.location = "/tile/sale";
+        //        window.location.assign("/tile/sale");
+        //    },
+        //    error: function (jqXHR, textStatus, errorThrown) {
+        //        alert('Cannot log you in with those creds... sorry!');
+        //        console.log(jqXHR);
+        //        console.log(textStatus);
+        //        console.log(errorThrown);
+        //    }
+        //});
 
-        $.get(uri, function (data) {
-            alert('User logged in!');
-        }).fail(function (error) {
-            alert('HTTP Error ' + error.status);
+        var token = SecurityManager.generateToken('adminToken', 'AdminWebApiDi');
+        //alert(token);
+        $.ajax({
+            url: '/user/signin?token=' + token,
+            type: "GET", // TODO change to post and poass token as data : {token:token}
+            //data: {token : token},
+            async: true,
+            success: function (data) {
+                //alert('User logged in!');
+                //window.location = "/tile/sale";
+                window.location.assign("/tile/sale");
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('Cannot log you in with those creds... sorry!');
+                console.log(jqXHR);
+                console.log(textStatus);
+                console.log(errorThrown);
+            }
         });
 
         $('#btn-login').css("display", "none");
