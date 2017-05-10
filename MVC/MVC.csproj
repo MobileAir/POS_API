@@ -152,6 +152,7 @@
     <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ProductVm.cs" />
+    <Compile Include="ViewModels\RegisterDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -227,6 +228,7 @@
     <Content Include="Scripts\Theme\Material\bootstrap.min.js" />
     <Content Include="Scripts\Theme\Material\chartist.min.js" />
     <Content Include="Scripts\Theme\Material\demo.js" />
+    <Content Include="Scripts\Theme\Material\sign-up.js" />
     <Content Include="Scripts\Theme\Material\home.js" />
     <Content Include="Scripts\Theme\Material\jquery-3.1.0.min.js" />
     <Content Include="Scripts\Theme\Material\material-dashboard.js" />
@@ -263,6 +265,7 @@
     <Content Include="Views\Themes\Material\Shared\_NumPad.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_Receipt.cshtml" />
     <Content Include="Views\Themes\Material\Products\Index.cshtml" />
+    <Content Include="Views\Themes\Material\User\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,31 +18,45 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    @*<div class="navbar navbar-inverse navbar-fixed-top" style="margin-bottom: 50px;">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Admin Nav Bar(Visible*)", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li><a href="/dashboard">Dashboard</a> </li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li class="pull-right">@Html.ActionLink("Products", "Index", "Products")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
-    <div class="">
-        <div class="wrapper" @*style="margin-top: 73px;"*@>
-
+   @if (Session["Token"] == null)
+   {
+       <nav class="navbar navbar-primary navbar-transparent navbar-absolute">
+           <div class="container">
+               <div class="navbar-header">
+                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                       <span class="sr-only">Toggle navigation</span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                       <span class="icon-bar"></span>
+                   </button>
+                   <a class="navbar-brand" href="/home">Point De Vente Demo : IPAD PRO</a>
+               </div>
+               <div class="collapse navbar-collapse">
+                   <ul class="nav navbar-nav navbar-right">
+                       <li class="">
+                           <a href="/user/signup">
+                               <i class="material-icons">person_add</i> Sign Up
+                           </a>
+                       </li>
+                       <li class="active">
+                           <a href="/home">
+                               <i class="material-icons">fingerprint</i> Sign In
+                           </a>
+                       </li>
+                       
+                   </ul>
+               </div>
+           </div>
+       </nav>
+   }
+<div class="">
+        <div class="wrapper" style="background-image: url(../../../Images/Theme/Material/cover.jpeg);background-size:cover">
+            
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
-            @Html.Partial("_Sidebar")
+            @if (Session["Token"] != null)
+            {
+                @Html.Partial("_Sidebar")
+            }
             @RenderBody()
         </div>
 
@@ -86,7 +100,7 @@
     @Scripts.Render("~/js/theme/material/others")
 
     <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>*@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/hmac-sha256.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/enc-base64.js"></script>
@@ -95,9 +109,9 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
-<div class="modal" id="num-pad">
+<div class="modal" id="num-pad" style="top: -9%;">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="background-color: rgba(213, 240, 251, 0.3); width: 75%;">
             @*<div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title">Manual Changes</h4>

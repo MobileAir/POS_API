@@ -4,6 +4,9 @@ using System.Text;
 
 namespace MVC.Common
 {
+    /// <summary>
+    /// Not in use..handled in JS
+    /// </summary>
     public class TokenAuthSecurityManager
     {
         private const string _alg = "HmacSHA512";

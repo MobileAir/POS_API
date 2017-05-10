@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 using DataAccess.Models;
 using DataAccess.UnitOfWork;
 using Services.DTOs;
@@ -20,6 +21,37 @@ namespace Services
         {
             _unitOfWork = unitOfWork;
         }
+
+        #region TokenAuth
+
+        public int Register(string email, string name, string hash, string username)
+        {
+            try
+            {
+                var user = new User()
+                {
+                    Email = email,
+                    IsSuperUser = false,
+                    Name = name,
+                    Password = hash,
+                    Username = username,
+                    RequestAllowed = 10
+                };
+                _unitOfWork.UserRepository.Insert(user);
+                _unitOfWork.Save();
+                return user.UserId;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            return 0;
+        }
+
+        #endregion
+
+        #region Basic Auth
 
         /// <summary>
         /// Public method to authenticate user by user name and password.
@@ -50,8 +82,8 @@ namespace Services
         /// <returns></returns>
         private static string HashPassword(string password, string salt)
         {
-            var sha = System.Security.Cryptography.SHA512.Create();
-            var computedHash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password + salt));
+            var sha = SHA512.Create();
+            var computedHash = sha.ComputeHash(Encoding.UTF8.GetBytes(password + salt));
             return Convert.ToBase64String(computedHash);
         }
         /// <summary>
@@ -61,7 +93,7 @@ namespace Services
         /// <returns></returns>
         private static string ToBase64(string value)
         {
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(value));
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(value));
         }
         /// <summary>
         /// Decode Base64 string
@@ -71,7 +103,7 @@ namespace Services
         private static string FromBase64(string value)
         {
             var bytes = Convert.FromBase64String(value);
-            return System.Text.Encoding.UTF8.GetString(bytes);
+            return Encoding.UTF8.GetString(bytes);
         }
 
 
@@ -122,7 +154,7 @@ namespace Services
 
             // Return the string encoded salt
             // return Convert.ToBase64String(salt); /// this conversion doesn't work with the hashPassword logic
-            return System.Text.Encoding.UTF8.GetString(salt);
+            return Encoding.UTF8.GetString(salt);
 
             // work fine but less safe
             //var chars = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ<>?,./;:[]{}|\!@#$%^&*()-_=+";
@@ -135,5 +167,7 @@ namespace Services
             //}
             //return new string(arr);
         }
+
+        #endregion
     }
 }

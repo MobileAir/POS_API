@@ -32,18 +32,19 @@ var SecurityManager = {
         return uri;
     },
 
-    generateToken: function (username, password) {
+    generateLoginToken: function (username, password) {
         // Generates a token to be used for API calls. The first time during authentication, pass in a username/password. All subsequent calls can simply omit username and password, as the same token key (hashed password) will be used.
         //if (username && password) {
         //    // If the user is providing credentials, then create a new key.
         //    SecurityManager.logout();
         //}
-        console.log('here');
+        
         // Set the username.
         SecurityManager.username = SecurityManager.username || username;
 
         // Set the key to a hash of the user's password + salt.
         SecurityManager.key = SecurityManager.key || CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
+        //alert(SecurityManager.key);
 
         // Set the client IP address.
         SecurityManager.ip = SecurityManager.ip || SecurityManager.getIp();
@@ -59,28 +60,40 @@ var SecurityManager = {
 
         // Construct the hash body by concatenating the username, ip, and userAgent.
         var message = [SecurityManager.username, SecurityManager.ip, navigator.userAgent.replace(/ \.NET.+;/, ''), ticks].join(':');
-
+        //alert(message);
         // Hash the body, using the key.
         var hash = CryptoJS.HmacSHA256(message, SecurityManager.key);
-
+        //alert(hash);
         // Base64-encode the hash to get the resulting token.
         var token = CryptoJS.enc.Base64.stringify(hash);
-
+        //alert(token);
         // Include the username and timestamp on the end of the token, so the server can validate.
         var tokenId = [SecurityManager.username, ticks].join(':');
-
+        //alert(tokenId);
         // Base64-encode the final resulting token.
         var tokenStr = CryptoJS.enc.Utf8.parse([token, tokenId].join(':'));
-        console.log('here2');
-        return CryptoJS.enc.Base64.stringify(tokenStr);
+        //alert(tokenStr);
+        return CryptoJS.enc.Base64.stringify(tokenStr); // TODO: Could i use tihs as state instead of MVC session, could use JS intercetor to set header with token or key
+    },
+
+    generateRegisterKeys: function (username, password) {
+
+        // Set the key to a hash of the user's password + salt.
+        SecurityManager.key = SecurityManager.key || CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
+
+        // Persist key piece.
+        localStorage['SecurityManager.key'] = SecurityManager.key;
+        
+        
+        return [SecurityManager.key, username.split("").reverse().join("")].join(':');
     },
 
     logout: function () {
-        // do on server invalidate
-        SecurityManager.ip = null;
 
         localStorage.removeItem('SecurityManager.username');
         SecurityManager.username = null;
+
+        localStorage.removeItem('redirect');
 
         localStorage.removeItem('SecurityManager.ip');
         SecurityManager.ip = null;
@@ -93,6 +106,17 @@ var SecurityManager = {
         }).fail(function (error) {
             alert('HTTP Error ' + error.status);
         });
+    },
+
+    clear: function () {
+        localStorage.removeItem('SecurityManager.username');
+        SecurityManager.username = null;
+
+        localStorage.removeItem('SecurityManager.ip');
+        SecurityManager.ip = null;
+
+        localStorage.removeItem('SecurityManager.key');
+        SecurityManager.key = null;
     },
 
     getIp: function () {

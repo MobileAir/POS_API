@@ -8,6 +8,7 @@ namespace MVC.Common
         public T Data { get; set; }
         public string Exception { get; set; }
         public string Token { get; set; }
+        public string Message { get; set; }
         public string ReasonPhrase { get; set; }
         public HttpStatusCode StatusCode { get; set; }
 

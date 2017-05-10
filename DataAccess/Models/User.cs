@@ -27,6 +27,10 @@ namespace DataAccess.Models
         [StringLength(50)]
         public string Name { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string Email { get; set; }
+
         public int RequestAllowed { get; set; }
 
         public bool IsSuperUser { get; set; }

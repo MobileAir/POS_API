@@ -12,22 +12,23 @@
 <div class="main-panel">
 
     @* ReSharper disable once Mvc.PartialViewNotResolved *@
-    @Html.Partial("_ContentNav")
+    @if (Session["Token"] != null)
+    {
+        @Html.Partial("_ContentNav")
+    }
 
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
-                    <div class="card">
+                <div class="col-md-4 col-sm-6 col-md-offset-2 col-sm-offset-1">
+                    <div class="card" style="background-color: rgba(213, 240, 251, 0.3)">
                         <div class="card-header" data-background-color="purple">
                             <h4 class="title">Sign In</h4>
                             <p class="category">Enter your Access Code and PIN</p>
                         </div>
                         <div class="card-content">
                             <form>
-
-
-                                <div class="row">
+                                @*<div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Access Code</label>
@@ -43,6 +44,26 @@
                                             <input type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
                                         </div>
                                     </div>
+                                </div>*@
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">perm_identity</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">ACCESS CODE</label>
+                                        <input id="access-code" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">lock_outline</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">PIN</label>
+                                        <input id="pin" type="password" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
                                 </div>
 
                                 <button id="btn-login" type="submit" class="btn btn-primary pull-right">Sign In</button>
@@ -52,7 +73,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                @*<div class="col-md-4">
                     <div class="card card-profile">
                         <div class="card-avatar">
                             <a href="#pablo">
@@ -70,7 +91,7 @@
                             <a href="/tile/sale" class="btn btn-primary">Go to Sale</a>
                         </div>
                     </div>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

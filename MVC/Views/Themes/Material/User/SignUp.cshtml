@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
+}
+<style>
+    .input-code {
+        text-align: center !important;
+        font-size: 20px;
+        font-weight: bold;
+    }
+</style>
+<div class="main-panel">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-md-offset-2 col-sm-offset-1">
+                    <div class="card" style="background-color: rgba(213, 240, 251, 0.3)">
+                        <div class="card-header" data-background-color="blue">
+                            <h4 class="title">Sign Up</h4>
+                            <p class="category">Enter an email for validation, an Access Code and a PIN</p>
+                        </div>
+                        <div class="card-content">
+                            <form>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">face</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">NAME</label>
+                                        <input id="name" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">email</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">EMAIL</label>
+                                        <input id="email" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">perm_identity</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">ACCESS CODE</label>
+                                        <input id="access-code" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="material-icons">lock_outline</i>
+                                    </span>
+                                    <div class="form-group label-floating is-empty">
+                                        <label class="control-label">PIN</label>
+                                        <input id="pin" type="password" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+
+                                <button id="btn-register" type="submit" class="btn btn-info pull-right">Register</button>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/Theme/Material/sign-up.js"></script>
+    <script>
+        $(function () {
+            //$(".sign-in-inputs").click(function () {
+            //    //$('#num-pad').dialog('open');
+            //    $('#num-pad').toggle();
+            //    return false;
+            //});
+        });
+    </script>
+}

@@ -11,6 +11,9 @@
         $('#btn-logout').css("display", "none");
     }
 
+    if (localStorage['redirect'])
+        alert(localStorage['redirect']);
+
     // Button click events.
     $('#btn-login').click(function () {
         // Login as the user and create a token key.
@@ -31,8 +34,11 @@
         //        console.log(errorThrown);
         //    }
         //});
+        var $accessCode = $('#access-code');
+        var $pin = $('#pin');
 
-        var token = SecurityManager.generateToken('adminToken', 'AdminWebApiDi');
+        //var token = SecurityManager.generateLoginToken('adminToken', 'AdminWebApiDi');
+        var token = SecurityManager.generateLoginToken($accessCode.val(), $pin.val());
         //alert(token);
         $.ajax({
             url: '/user/signin?token=' + token,
@@ -42,6 +48,7 @@
             success: function (data) {
                 //alert('User logged in!');
                 //window.location = "/tile/sale";
+                localStorage.removeItem('redirect'); // remove return form sign up
                 window.location.assign("/tile/sale");
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -66,16 +73,5 @@
         $('#btn-logout').css("display", "none");
         $('#status').html('Alec Thompson.');
         $('#role').html('CEO / CO-FOUNDER.');
-    });
-
-    $('#btnSearch').click(function () {
-        var query = $('#txtQuery').val();
-
-        $.get('/home/find?q=' + query, function (data) {
-            var names = data.join(', ');
-            $("#result").append('<p>' + names + '</p>');
-        }).fail(function (error) {
-            alert('HTTP Error ' + error.status);
-        });
     });
 });

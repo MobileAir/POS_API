@@ -12,6 +12,8 @@
         
         public string Name { get; set; }
 
+        public string Email { get; set; }
+
         public int RequestAllowed { get; set; }
 
         public bool IsSuperUser { get; set; }

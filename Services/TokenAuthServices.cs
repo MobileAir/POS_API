@@ -89,7 +89,7 @@ namespace Services
         /// 4. Compare the computed token with the one supplied and ensure they match.
         /// </summary>
         /// TODO: add custom route
-        public static string GenerateToken(string username, string password, string ip, string userAgent, long ticks)
+        public string GenerateToken(string username, string password, string ip, string userAgent, long ticks)
         {
             string hash = string.Join(":", new string[] { username, ip, userAgent, ticks.ToString() });
             string hashLeft = "";

@@ -54,7 +54,7 @@ namespace MVC.Common
                         }
                     }))
                 {
-                    response.Wait();
+                    response.Wait(); // SYNC
                 }
             }
             catch (Exception ex)
@@ -118,7 +118,7 @@ namespace MVC.Common
 
                     }))
                 {
-                    response.Wait();
+                    response.Wait(); // SYNC
                 }
 
             }
@@ -132,16 +132,16 @@ namespace MVC.Common
         }
 
         /// <summary>
-        /// Non Generic Web API caller for Token validation POST request
+        /// Async Web API caller for Register Keys
         /// </summary>
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="url">Url</param>
         /// <param name="token"></param>
         /// <param name="userAgent"></param>
         /// <returns></returns>
-        public bool Post(string url, string token, string userAgent)
+        public ApiResponse<T> AsyncPost<T>(string url, string token, string userAgent, T o) where T : class
         {
-            var authorized = false;
+            var result = new ApiResponse<T>();
             try
             {
                 HttpClient request = null;
@@ -149,46 +149,50 @@ namespace MVC.Common
                 if (!token.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace())
                     request = TokenAuthRequestManager.ConfigureRequest(token, userAgent);
                 else
-                    return authorized;
+                    return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
+                //TODO: do check for null bef convert
+                var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
-                    var response = request.PostAsync(url, null).ContinueWith((taskWithResponse) =>
+                    var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
                     {
 
                         if (taskWithResponse != null)
                         {
                             if (taskWithResponse.Status != TaskStatus.RanToCompletion)
                             {
-                                throw new Exception(
-                                    $"Server error (HTTP {taskWithResponse.Result?.StatusCode}: {taskWithResponse.Exception?.InnerException} : {taskWithResponse.Exception?.Message}).");
+                                result.Success = false;
+                                result.Exception =
+                                    $"Server error (HTTP {taskWithResponse.Result?.StatusCode}: {taskWithResponse.Exception?.InnerException} : {taskWithResponse.Exception?.Message}).";
                             }
                             else if (taskWithResponse.Result.IsSuccessStatusCode)
                             {
                                 var jsonString = taskWithResponse.Result.Content.ReadAsStringAsync();
-                                jsonString.Wait();
                                 var data = JsonConvert.DeserializeObject(jsonString.Result);
-                                authorized = bool.Parse(data.ToString());
+                                result.Message = data.ToString();
                             }
                             else
                             {
-                                authorized = false;
+                                result.ReasonPhrase = taskWithResponse.Result.ReasonPhrase;
+                                result.StatusCode = taskWithResponse.Result.StatusCode;
                             }
 
                         }
 
                     }))
                 {
-                    response.Wait();
+                    // ASYNC
+                    //response.Wait(); 
                 }
 
             }
             catch (Exception ex)
             {
-                // log exception
-                throw ex;
+                result.Success = false;
+                result.Exception = ex.ToString();
 
             }
-            return authorized;
+            return result;
         }
 
         /// <summary>
@@ -241,7 +245,7 @@ namespace MVC.Common
                         }
                     }))
                 {
-                    response.Wait();
+                    response.Wait(); // SYNC
                 }
 
             }
@@ -302,7 +306,7 @@ namespace MVC.Common
 
                     }))
                 {
-                    response.Wait();
+                    response.Wait(); // SYNC
                 }
 
             }
