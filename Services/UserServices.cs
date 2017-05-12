@@ -28,6 +28,10 @@ namespace Services
         {
             try
             {
+                var exists = _unitOfWork.UserRepository.GetSingle(x => x.Email == email);
+                if (exists != null)
+                    return 0;
+
                 var user = new User()
                 {
                     Email = email,
@@ -43,10 +47,9 @@ namespace Services
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
-                throw;
+                // log
+                return 0;
             }
-            return 0;
         }
 
         #endregion
@@ -138,7 +141,7 @@ namespace Services
 
             return "Fail";
         }
-        
+
         private string GenerateSaltValue()
         {
             var random = new RNGCryptoServiceProvider();

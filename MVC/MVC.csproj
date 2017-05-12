@@ -266,6 +266,7 @@
     <Content Include="Views\Themes\Material\Shared\_Receipt.cshtml" />
     <Content Include="Views\Themes\Material\Products\Index.cshtml" />
     <Content Include="Views\Themes\Material\User\SignUp.cshtml" />
+    <Content Include="Views\User\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

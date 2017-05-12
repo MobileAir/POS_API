@@ -28,7 +28,12 @@ namespace MVC.Controllers
             Session.Remove(SecurityToken);
             Session.Clear(); // Removes all keys and values from the session-state collection.
             Session.Abandon(); // you lose that specific session and the user will get a new session key. You could use it for example when the user logs out.
-
+            if (Request.Cookies["ASP.NET_SessionId"] != null)
+            {
+                var responseCookie = Response.Cookies["ASP.NET_SessionId"];
+                if (responseCookie != null)
+                    responseCookie.Expires = DateTime.Now.AddDays(-1);
+            }
             return RedirectToAction("Home", "Home");
         }
 

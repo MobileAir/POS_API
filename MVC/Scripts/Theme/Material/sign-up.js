@@ -38,7 +38,7 @@
                 //} else {
                 //    alert('An error occured please try registering again');
                 //}
-                localStorage['redirect'] = "Login Successful - Now please Sign In with those credentials."; // tell home iredirtect
+                localStorage['redirect'] = "Signup Successful - Now please Sign In with those credentials."; // tell home iredirtect
                 window.location.assign("/home");
 
             },

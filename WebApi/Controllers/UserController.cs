@@ -42,6 +42,9 @@ namespace WebApi.Controllers
                     hash,
                     username
                 );
+            if (id == 0)
+                Request.CreateResponse(HttpStatusCode.Conflict, id);
+
             return Request.CreateResponse(HttpStatusCode.Created, id);
         }
 

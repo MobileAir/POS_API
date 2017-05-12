@@ -79,7 +79,7 @@ var SecurityManager = {
     generateRegisterKeys: function (username, password) {
 
         // Set the key to a hash of the user's password + salt.
-        SecurityManager.key = SecurityManager.key || CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
+        SecurityManager.key = CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
 
         // Persist key piece.
         localStorage['SecurityManager.key'] = SecurityManager.key;
