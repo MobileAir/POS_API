@@ -64,42 +64,42 @@
                                 <th>Qty</th>
                                 <th class="text-right">Total</th>
                                 </thead>
-                                <tbody>
+                                <tbody id="receipt-tbody">
                                     <tr>
                                         <td>Matcha Latte</td>
                                         <td class="text-primary">$6,73</td>
                                         <td>2</td>
-                                        <td class="text-primary text-right">$12,99</td>
+                                        <td class="text-primary text-right js-sum">$12.99</td>
                                     </tr>
                                     <tr>
                                         <td>Banana Loaf</td>
                                         <td class="text-primary">$3,73</td>
                                         <td>2</td>
-                                        <td class="text-primary text-right">$6,99</td>
+                                        <td class="text-primary text-right js-sum">$6.99</td>
                                     </tr>
                                     <tr>
                                         <td>Pumpkin Latte</td>
                                         <td class="text-primary">$6,73</td>
                                         <td>1</td>
-                                        <td class="text-primary text-right">$6,73</td>
+                                        <td class="text-primary text-right js-sum">$6.73</td>
                                     </tr>
                                     <tr>
                                         <td class="thick-line"></td>
                                         <td class="thick-line"></td>
                                         <td class="thick-line text-center"><strong>Subtotal</strong></td>
-                                        <td class="thick-line text-right">$70.99</td>
+                                        <td id="sub-total" class="thick-line text-right">$70.99</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
-                                        <td class="no-line text-center"><strong>Taxes(TVO 12.5%)</strong></td>
-                                        <td class="no-line text-right">$15.12</td>
+                                        <td class="no-line text-center"><strong>HST 13%</strong></td>
+                                        <td id="taxes" class="no-line text-right">$15.12</td>
                                     </tr>
                                     <tr>
                                         <td class="no-line"></td>
                                         <td class="no-line"></td>
                                         <td class="no-line text-center"><strong>Total</strong></td>
-                                        <td class="no-line text-right">$85.99</td>
+                                        <td id="total" class="no-line text-right">$85.99</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -11,7 +11,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-8" id="products">
                     @*<div class="row">*@
 
                     @foreach (var item in Model)
@@ -22,14 +22,14 @@
                         }
                                 <div class="col-lg-3 col-md-3 col-sm-3">
                                     <div class="card card-stats">
-                                        <div class="card-header" data-background-color="orange">
+                                        <div id="add-prod" class="card-header" data-background-color="orange" style="cursor: pointer;">
                                             <i class="material-icons">add</i>
                                         </div>
                                         <div class="card-content">
-                                            <p class="category">
+                                            <p class="category js-price">
                                                 <small>$</small>74.99
                                             </p>
-                                            <h5 class="title">
+                                            <h5 class="title js-name">
                                                 @item.name
                                             </h5>
                                         </div>
@@ -66,6 +66,74 @@
 @section scripts
 {
     <script>
+        var ONTARIO_HST = 0.13;
+// TODO: where should go this global... for easy maintenance... shuld call client server code that loook into AppSettings? but heavy load up
+        
 
+        $(function () {
+            var dict = {}; // global to this instance/page
+
+            var updateTotal = function() {
+                var $sumList = $("#receipt-tbody .js-sum");
+                if ($sumList) {
+                    var subTotal = 0.00;
+                    $sumList.each(function(index, element) {
+                        //console.log($(this));
+                        var amount = parseFloat($(this).html().replace('$', ''));
+                        subTotal += amount;
+                    });
+                    if (subTotal > 0.00) {
+                        $('#sub-total').html('$' + subTotal.toFixed(2));
+                        var taxes = Math.round((subTotal * ONTARIO_HST) * 100) / 100;
+                        $('#taxes').html('$' + taxes.toFixed(2));
+                        var total = Math.round((subTotal + taxes) * 100) / 100;
+                        $('#total').html('$' + total.toFixed(2));
+                    } else {
+
+                    }
+                }
+            }
+            updateTotal();
+
+            $("#products #add-prod").click(function() {
+
+                var $parent = $(this).parent();
+                var $price = $parent.find('.js-price');
+                var $name = $parent.find('.js-name');
+                var nameKeyIdText = $name.text().trim().replace(/\s/g, '');
+                var $receiptBody = $('#receipt-tbody');
+
+                var refresh = false;
+
+                if (dict[nameKeyIdText]) {
+                    dict[nameKeyIdText] = dict[nameKeyIdText] + 1;
+                    refresh = true;
+                } else {
+                    dict[nameKeyIdText] = 1;
+                }
+                var qty = dict[nameKeyIdText];
+                var amount = (parseFloat($price.text().replace('$', '')) * qty);
+
+
+                if (refresh) {
+                    var oldRow = $receiptBody.find('#' + nameKeyIdText);
+                    oldRow.remove();
+                }
+
+                var row =
+                    '<tr id="' + nameKeyIdText + '"><td>' +
+                        $name.text() +
+                        '</td><td class="text-primary">' +
+                        $price.text() +
+                        '</td><td>' +
+                        qty +
+                        '</td><td class="text-primary text-right js-sum">$' +
+                        amount.toFixed(2) +
+                        '</td></tr>';
+
+                $receiptBody.prepend(row);
+                updateTotal();
+            });
+        });
     </script>
 }
