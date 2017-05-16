@@ -45,11 +45,27 @@ namespace Services
         /// <returns></returns>
         public IEnumerable<ProductDTO> GetAll()
         {
-            var products = _unitOfWork.ProductRepository.GetAll().ToList();
+            var products = _unitOfWork.ProductRepository.GetAllAsQueryable();
             if (products.Any())
             {
                 Mapper.CreateMap<Product, ProductDTO>();
-                var productsModel = Mapper.Map<List<Product>, List<ProductDTO>>(products);
+                var productsModel = Mapper.Map<List<Product>, List<ProductDTO>>(products.ToList());
+                return productsModel;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Fetches all by CategoryID
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ProductDTO> GetByCategory(int id)
+        {
+            var products = _unitOfWork.ProductRepository.GetManyQueryable(x => x.CategoryID == id);
+            if (products.Any())
+            {
+                Mapper.CreateMap<Product, ProductDTO>();
+                var productsModel = Mapper.Map<List<Product>, List<ProductDTO>>(products.ToList());
                 return productsModel;
             }
             return null;

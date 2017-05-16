@@ -50,49 +50,56 @@
        </nav>
    }
 <div class="">
-        <div class="wrapper" style="background-image: url(../../../Images/Theme/Material/cover.jpeg);background-size:cover">
-            
+    @if (Session["Token"] != null)
+    {
+        <div class="wrapper">
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
-            @if (Session["Token"] != null)
-            {
-                @Html.Partial("_Sidebar")
-            }
+            @Html.Partial("_Sidebar")
             @RenderBody()
         </div>
+    }
+    else
+    {
+        <div class="wrapper" style="background-image: url(../../../Images/Theme/Material/cover.jpeg); background-size: cover">
+            
+            @RenderBody()
+        </div>
+    }
+    
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <nav class="pull-left">
-                    <ul>
-                        <li>
-                            <a href="#">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Company
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Portfolio
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Blog
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-                <p class="copyright pull-right">
-                    &copy;
-                    <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
-                </p>
-            </div>
-        </footer>
-    </div>
+    <footer class="footer">
+        <div class="container-fluid">
+            <nav class="pull-left">
+                <ul>
+                    <li>
+                        <a href="#">
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Company
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Portfolio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            Blog
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <p class="copyright pull-right">
+                &copy;
+                <script>document.write(new Date().getFullYear())</script> <a href="http://www.creative-tim.com">Creative Tim</a>, made with love for a better web
+            </p>
+        </div>
+    </footer>
+</div>
 
     @Scripts.Render("~/js/theme/material/jquery")
     @Scripts.Render("~/js/theme/material/bootstrap")

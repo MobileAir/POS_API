@@ -1,4 +1,10 @@
-﻿<div class="sidebar" data-color="purple" data-image="../../../Images/Theme/Material/sidebar-1.jpg">
+﻿@using MVC.Common
+@using MVC.ViewModels
+@{
+    //var categories = new TokenAuthCrudClient().Get<List<ProductVm>>("categories...", Session["Token"].ToString(), Request.UserAgent);
+}
+
+<div class="sidebar" data-color="purple" data-image="../../../Images/Theme/Material/sidebar-1.jpg">
     <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -13,6 +19,7 @@
 
     <div class="sidebar-wrapper">
         <ul class="nav">
+            
             <li class="active">
                 <a href="/tile/sale">
                     <!-- TODO: use custom route... Html.Action( mvc stack overflow exception action)-->
@@ -26,12 +33,11 @@
                     <p>Brewed Coffee</p>
                 </a>
             </li>
-            
+
             <li class="">
-                <a href="/tile/sale">
-                    <!-- TODO: use custom route... Html.Action( mvc stack overflow exception action)-->
+                <a href="/tile/sale/1">
                     <i class="material-icons">bubble_chart</i>
-                    <p>Muffin</p>
+                    <p>Latte</p>
                 </a>
             </li>
             <li>
@@ -40,7 +46,7 @@
                     <p>Espresso</p>
                 </a>
             </li>
-            
+
             <li>
                 <a href="/tile/sale">
                     <i class="material-icons">library_books</i>

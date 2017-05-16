@@ -53,7 +53,7 @@ namespace WebApi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
         }
 
-        [Route("allordered")]
+        [Route("ordered")]
         [HttpGet]
         public HttpResponseMessage GetOrderedByName()
         {
@@ -68,7 +68,7 @@ namespace WebApi.Controllers
         }
 
         // GET api/product/5 - not anymore useing custom routing below or multiple
-        [Route("get/{id:int}")]
+        [Route("id/{id:int}")]
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
@@ -78,11 +78,21 @@ namespace WebApi.Controllers
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
         }
 
-        [Route("getbyname/{name}")]
+        [Route("name/{name}")]
         [HttpGet]
         public HttpResponseMessage GetByName(string name)
         {
             var product = _productServices.GetAll().FirstOrDefault(x => x.Name.ToLower() == name.ToLower());
+            if (product != null)
+                return Request.CreateResponse(HttpStatusCode.OK, product);
+            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");
+        }
+
+        [Route("category/{id:int}")]
+        [HttpGet]
+        public HttpResponseMessage GetByCategory(int id)
+        {
+            var product = _productServices.GetByCategory(id);
             if (product != null)
                 return Request.CreateResponse(HttpStatusCode.OK, product);
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "No product found for this id");

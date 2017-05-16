@@ -10,6 +10,7 @@ namespace Services
     {
         ProductDTO GetById(int id);
         IEnumerable<ProductDTO> GetAll();
+        IEnumerable<ProductDTO> GetByCategory(int id);
         ProductDTO Create(ProductDTO p);
         bool Update(int id,ProductDTO p);
         bool Delete(int id);

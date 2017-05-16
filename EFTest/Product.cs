@@ -1,11 +1,14 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace DataAccess.Models
+namespace EFTest
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     public partial class Product
     {
-        
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
             ProductsTransactions = new HashSet<ProductsTransaction>();
@@ -21,6 +24,7 @@ namespace DataAccess.Models
 
         public virtual Category Category { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductsTransaction> ProductsTransactions { get; set; }
     }
 }

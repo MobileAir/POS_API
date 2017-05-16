@@ -11,16 +11,16 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-8" id="products">
+                <div class="col-md-7" id="products">
                     @*<div class="row">*@
 
                     @foreach (var item in Model)
                     {
 
-                        if (rowCount % 4 == 0){
+                        if (rowCount % 3 == 0){
                              @:<div class="row">
                         }
-                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
                                     <div class="card card-stats">
                                         <div id="add-prod" class="card-header" data-background-color="orange" style="cursor: pointer;">
                                             <i class="material-icons">add</i>
@@ -40,7 +40,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                if (rowCount % 4 == 0)
+                                if (rowCount % 3 == 0)
                                 {
                                     @:</div>
                                 }
@@ -48,11 +48,11 @@
                         {
                             rowCount++;
                         }
-                    }
+                    
                     }
                     @*</div>*@
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     @* ReSharper disable once Mvc.PartialViewNotResolved *@
                     @Html.Partial("_Receipt")
                     @* ReSharper disable once Mvc.PartialViewNotResolved *@

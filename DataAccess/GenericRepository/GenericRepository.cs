@@ -149,6 +149,15 @@ namespace DataAccess.GenericRepository
         }
 
         /// <summary>
+        /// generic method to fetch all the records from db
+        /// </summary>
+        /// <returns></returns>
+        public virtual IQueryable<TEntity> GetAllAsQueryable()
+        {
+            return DbSet.AsQueryable();
+        }
+
+        /// <summary>
         /// Include multiple
         /// </summary>
         /// <param name="predicate"></param>

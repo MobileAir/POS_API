@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
+using Microsoft.Ajax.Utilities;
 using MVC.Common;
 using MVC.Filters;
 using MVC.ViewModels;
@@ -13,27 +14,25 @@ namespace MVC.Controllers
     {
         // GET: Sale
         [Route("sale")]
-        public ActionResult Sale(string data = null)
+        [Route("sale/{category:int}")]
+        public ActionResult Sale(int category = 0)
         {
             List<ProductVm> products = null;
 
-            //var throwE = int.Parse("hahahahaha");
+            var uri = "v1/Products/all";
+            if (category != 0)
+                uri = $"v1/Products/category/{category}";
 
-            if (data != null && TempData["Model"] != null)
-            {
-                var p = (ProductVm)TempData["Model"];
-                ViewBag.Product = $"Success data change to {p.name}";
-            }
-            var r = new TokenAuthCrudClient().Get<List<ProductVm>>("v1/Products/all", Session["Token"].ToString(), Request.UserAgent);
-            products = r?.Data;
+            var apiResponse = new TokenAuthCrudClient().Get<List<ProductVm>>(uri, Session["Token"].ToString(), Request.UserAgent);
+            products = apiResponse?.Data;
             if (products == null)
             {
                 // Get - Debug basic error  info - basic handliing better should be done
-                if (r?.StatusCode == HttpStatusCode.Unauthorized)
+                if (apiResponse?.StatusCode == HttpStatusCode.Unauthorized)
                 {
-                    return new HttpUnauthorizedResult(r?.ReasonPhrase);// RedirectToAction("Home", "Home"); //new HttpUnauthorizedResult(r?.ReasonPhrase);
+                    return new HttpUnauthorizedResult(apiResponse?.ReasonPhrase);// RedirectToAction("Home", "Home"); //new HttpUnauthorizedResult(r?.ReasonPhrase);
                 }
-                return HttpNotFound(r?.Exception ?? "Response was null");
+                return HttpNotFound(apiResponse?.Exception ?? "Response was null");
             }
             return View(products);
         }
