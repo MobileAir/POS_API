@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Services;
+using Services.Interface;
 
 namespace WebApi.ActionFilters
 {

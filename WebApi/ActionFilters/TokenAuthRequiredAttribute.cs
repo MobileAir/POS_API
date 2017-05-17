@@ -7,6 +7,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Microsoft.Ajax.Utilities;
 using Services;
+using Services.Interface;
 
 namespace WebApi.ActionFilters
 {

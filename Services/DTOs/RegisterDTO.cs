@@ -1,4 +1,4 @@
-﻿namespace MVC.ViewModels
+﻿namespace Services.DTOs
 {
     public class RegisterDTO
     {

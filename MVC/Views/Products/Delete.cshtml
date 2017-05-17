@@ -1,4 +1,4 @@
-﻿@model MVC.Models.ProductDto
+﻿@model MVC.DTOs.ProductDTO
 
 @{
     ViewBag.Title = "Delete";
@@ -13,11 +13,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ProductName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
     </dl>

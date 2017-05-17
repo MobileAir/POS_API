@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MVC.ViewModels.ProductVm>
+﻿@model IEnumerable<MVC.DTOs.ProductDTO>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
@@ -30,7 +30,7 @@
                                                 <small>$</small>74.99
                                             </p>
                                             <h5 class="title js-name">
-                                                @item.name
+                                                @item.Name
                                             </h5>
                                         </div>
                                         <div class="card-footer">

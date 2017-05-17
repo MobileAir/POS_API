@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Web.Http.Controllers;
 using Services;
+using Services.Interface;
 
 namespace WebApi.Filters
 {

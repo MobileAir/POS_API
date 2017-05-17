@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Services;
 using Services.DTOs;
+using Services.Interface;
 using WebApi.Filters;
 
 namespace WebApi.Controllers

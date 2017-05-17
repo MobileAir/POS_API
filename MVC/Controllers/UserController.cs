@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using MVC.Common;
+using MVC.DTOs;
 using MVC.ViewModels;
 
 namespace MVC.Controllers

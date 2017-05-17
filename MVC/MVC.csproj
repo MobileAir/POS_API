@@ -138,9 +138,13 @@
     <Compile Include="Common\TokenAuthSecurityManager.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IpController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DTOs\CategoryDTO.cs" />
+    <Compile Include="DTOs\ProductDTO.cs" />
+    <Compile Include="DTOs\RegisterDTO.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Filters\ExceptionLoggingFilter.cs" />
     <Compile Include="Filters\TokenAuthCheckFilter.cs" />
@@ -148,11 +152,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\ThemeViewEngine.cs" />
-    <Compile Include="Models\LoginVm.cs" />
-    <Compile Include="Models\ProductDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\LoginVm.cs" />
     <Compile Include="ViewModels\ProductVm.cs" />
-    <Compile Include="ViewModels\RegisterDTO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />

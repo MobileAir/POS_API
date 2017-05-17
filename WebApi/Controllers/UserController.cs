@@ -1,14 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
 using System.Web.Http;
-using Microsoft.Ajax.Utilities;
-using Services;
 using Services.DTOs;
-using WebApi.Models;
+using Services.Interface;
 
 namespace WebApi.Controllers
 {

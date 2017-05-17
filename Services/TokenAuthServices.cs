@@ -2,6 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 using DataAccess.UnitOfWork;
+using Services.Interface;
 
 namespace Services
 {

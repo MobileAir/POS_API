@@ -1,5 +1,6 @@
 ﻿using Resolver;
 using System.ComponentModel.Composition;
+using Services.Interface;
 
 namespace Services
 {

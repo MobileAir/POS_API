@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
-using Microsoft.Ajax.Utilities;
 using MVC.Common;
+using MVC.DTOs;
 using MVC.Filters;
-using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
@@ -17,13 +16,13 @@ namespace MVC.Controllers
         [Route("sale/{category:int}")]
         public ActionResult Sale(int category = 0)
         {
-            List<ProductVm> products = null;
+            List<ProductDTO> products = null;
 
             var uri = "v1/Products/all";
             if (category != 0)
                 uri = $"v1/Products/category/{category}";
 
-            var apiResponse = new TokenAuthCrudClient().Get<List<ProductVm>>(uri, Session["Token"].ToString(), Request.UserAgent);
+            var apiResponse = new TokenAuthCrudClient().Get<List<ProductDTO>>(uri, Session["Token"].ToString(), Request.UserAgent);
             products = apiResponse?.Data;
             if (products == null)
             {

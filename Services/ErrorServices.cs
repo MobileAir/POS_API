@@ -4,6 +4,7 @@ using AutoMapper;
 using DataAccess.Models;
 using DataAccess.UnitOfWork;
 using Services.DTOs;
+using Services.Interface;
 
 namespace Services
 {

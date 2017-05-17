@@ -1,6 +1,6 @@
-﻿using Services.DTOs;
+using Services.DTOs;
 
-namespace Services
+namespace Services.Interface
 {
     public interface IBasicAuthTokenServices
     {

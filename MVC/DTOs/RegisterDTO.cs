@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models
+namespace MVC.DTOs
 {
     public class RegisterDTO
     {

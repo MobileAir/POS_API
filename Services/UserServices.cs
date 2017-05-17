@@ -4,6 +4,7 @@ using System.Text;
 using DataAccess.Models;
 using DataAccess.UnitOfWork;
 using Services.DTOs;
+using Services.Interface;
 
 namespace Services
 {

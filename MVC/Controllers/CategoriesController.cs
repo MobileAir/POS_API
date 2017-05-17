@@ -1,35 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Collections.Generic;
 using System.Net;
 using System.Web.Mvc;
 using MVC.Filters;
 using MVC.Common;
 using MVC.DTOs;
-using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
     [TokenAuthCheckFilter]
-    [RoutePrefix("products")]
-    public class ProductsController : Controller
+    [RoutePrefix("categories")]
+    public class CategoriesController : Controller
     {
-        // GET: Products
+
+        // TODO: Make method callable from _Sidebar with AJAX
+
+        // GET: Categories
         [Route("all")]
         public ActionResult Index(string data = null)
         {
-            List<ProductDTO> products = null;
-
-            //var throwE = int.Parse("hahahahaha");
+            List<CategoryDTO> categories = null;
 
             if (data != null && TempData["Model"] != null)
             {
-                var p = (ProductDTO)TempData["Model"];
-                ViewBag.Product = $"Success data change to {p.Name}";
+                var p = (CategoryDTO)TempData["Model"];
+                ViewBag.Category = $"Success data change to {p.Name}";
             }
-            var r = new TokenAuthCrudClient().Get<List<ProductDTO>>("v1/Products/all", Session["Token"].ToString(), Request.UserAgent);
-            products = r?.Data;
-            if (products == null)
+            var r = new TokenAuthCrudClient().Get<List<CategoryDTO>>("v1/Categories/all", Session["Token"].ToString(), Request.UserAgent);
+            categories = r?.Data;
+            if (categories == null)
             {
                 // Get - Debug basic error  info - basic handliing better should be done
                 if (r?.StatusCode == HttpStatusCode.Unauthorized)
@@ -38,10 +36,10 @@ namespace MVC.Controllers
                 }
                 return HttpNotFound(r?.Exception ?? "Response was null");
             }
-            return View(products);
+            return View(categories);
         }
 
-        // GET: Products/Details/5
+        // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -49,34 +47,34 @@ namespace MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var sessionToken = Session["Token"];
-            var resp = new TokenAuthCrudClient().Get<ProductDTO>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent);
-            ProductDTO product = resp?.Data;
-            if (product == null)
+            var resp = new TokenAuthCrudClient().Get<CategoryDTO>($"v1/Categories/get/{id}", sessionToken.ToString(), Request.UserAgent);
+            CategoryDTO category = resp?.Data;
+            if (category == null)
             {
                 // Get - Debug basic error  info
                 return HttpNotFound(resp?.Exception ?? "Response was null");
             }
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Create
+        // GET: Categories/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Products/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Name,CategoryID")] ProductDTO product)
+        public ActionResult Create([Bind(Include = "ID,Name")] CategoryDTO category)
         {
             if (ModelState.IsValid)
             {
                 var sessionToken = Session["Token"];
                 var response = new TokenAuthCrudClient().
-                    Post<ProductDTO>($"v1/Products/add", sessionToken.ToString(), Request.UserAgent, product);
+                    Post<CategoryDTO>($"v1/Categories/add", sessionToken.ToString(), Request.UserAgent, category);
                 if (response.Success && response.Data != null)
                 {
                     TempData["Model"] = response.Data;
@@ -84,10 +82,10 @@ namespace MVC.Controllers
                 }
             }
 
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Edit/5
+        // GET: Categories/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,36 +93,36 @@ namespace MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var sessionToken = Session["Token"];
-            ProductDTO product = new TokenAuthCrudClient().Get<ProductDTO>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
-            if (product == null)
+            CategoryDTO category = new TokenAuthCrudClient().Get<CategoryDTO>($"v1/Categories/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(category);
         }
 
-        // POST: Products/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Name,CategoryID")] ProductDTO product)
+        public ActionResult Edit([Bind(Include = "ID,Name")] CategoryDTO category)
         {
             if (ModelState.IsValid)
             {
                 var sessionToken = Session["Token"];
                 var response = new TokenAuthCrudClient().
-                    Put<ProductDTO>($"v1/Products/update/{product.ID}", sessionToken.ToString(), Request.UserAgent, product);
+                    Put<CategoryDTO>($"v1/Categories/update/{category.ID}", sessionToken.ToString(), Request.UserAgent, category);
                 if (response.Success)
                 {
-                    TempData["Model"] = product;
+                    TempData["Model"] = category;
                     return RedirectToAction("Index", new { data = "Success" });
                 }
             }
-            return View(product);
+            return View(category);
         }
 
-        // GET: Products/Delete/5
+        // GET: Categories/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -132,15 +130,15 @@ namespace MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var sessionToken = Session["Token"];
-            ProductDTO product = new TokenAuthCrudClient().Get<ProductDTO>($"v1/Products/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
-            if (product == null)
+            CategoryDTO category = new TokenAuthCrudClient().Get<CategoryDTO>($"v1/Categories/get/{id}", sessionToken.ToString(), Request.UserAgent)?.Data;
+            if (category == null)
             {
                 return HttpNotFound();
             }
-            return View(product);
+            return View(category);
         }
 
-        // POST: Products/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -150,7 +148,7 @@ namespace MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var sessionToken = Session["Token"];
-            var response = new TokenAuthCrudClient().Delete<ProductDTO>($"v1/Products/remove/{id}", sessionToken.ToString(), Request.UserAgent);
+            var response = new TokenAuthCrudClient().Delete<CategoryDTO>($"v1/Categories/remove/{id}", sessionToken.ToString(), Request.UserAgent);
             if (response.Success)
             {
                 return RedirectToAction("Index");

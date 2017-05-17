@@ -4,6 +4,7 @@ using AutoMapper;
 using DataAccess.Models;
 using DataAccess.UnitOfWork;
 using Services.DTOs;
+using Services.Interface;
 
 namespace Services
 {
@@ -80,7 +81,8 @@ namespace Services
         {
             var product = new Product
             {
-                Name = productDto.Name
+                Name = productDto.Name,
+                CategoryID = productDto.CategoryID
             };
             _unitOfWork.ProductRepository.Insert(product);
             _unitOfWork.Save();

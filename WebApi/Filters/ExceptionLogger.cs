@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Http.Filters;
 using Services;
 using Services.DTOs;
+using Services.Interface;
 
 namespace WebApi.Filters
 {

@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Services.DTOs;
 
-namespace Services
+namespace Services.Interface
 {
     /// <summary>
-    /// Product Service Contract
+    /// Error Service Contract
     /// </summary>
     public interface IErrorServices
     {

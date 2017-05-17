@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace MVC.Models
+namespace MVC.ViewModels
 {
     public class LoginVm
     {

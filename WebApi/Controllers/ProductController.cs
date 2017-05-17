@@ -4,9 +4,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
-using Services;
 using Services.DTOs;
-using WebApi.ActionFilters;
+using Services.Interface;
 using WebApi.Filters;
 
 namespace WebApi.Controllers
@@ -43,27 +42,11 @@ namespace WebApi.Controllers
         public HttpResponseMessage Get()
         {
             //int throwE = int.Parse("puhahahhahhha");
-            var products = _productServices.GetAll().AsQueryable();
-            if (products != null)
-            {
-                var productEntities = products as List<ProductDTO> ?? products.ToList();
-                if (productEntities.Any())
-                    return Request.CreateResponse(HttpStatusCode.OK, productEntities);
-            }
-            return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
-        }
-
-        [Route("ordered")]
-        [HttpGet]
-        public HttpResponseMessage GetOrderedByName()
-        {
             var products = _productServices.GetAll();
-            if (products != null)
-            {
-                var productEntities = products as List<ProductDTO> ?? products.ToList();
-                if (productEntities.Any())
-                    return Request.CreateResponse(HttpStatusCode.OK, productEntities.OrderByDescending(x => x.Name));
-            }
+            var productEntities = products as List<ProductDTO> ?? products.ToList();
+            if (productEntities.Any())
+                return Request.CreateResponse(HttpStatusCode.OK, productEntities);
+            
             return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Products not found");
         }
 
@@ -102,20 +85,20 @@ namespace WebApi.Controllers
         [Route("add")]
         [Route("post")]
         [HttpPost]
-        public ProductDTO Post([FromBody] ProductDTO productEntity)
+        public ProductDTO Post([FromBody] ProductDTO productDtos)
         {
-            return _productServices.Create(productEntity);
+            return _productServices.Create(productDtos);
         }
 
         // PUT api/product/5
         [Route("update/{id:int}")]
         [Route("put/{id:int}")]
         [HttpPut]
-        public bool Put(int id, [FromBody]ProductDTO productEntity)
+        public bool Put(int id, [FromBody]ProductDTO productDtos)
         {
             if (id > 0)
             {
-                return _productServices.Update(id, productEntity);
+                return _productServices.Update(id, productDtos);
             }
             return false;
         }

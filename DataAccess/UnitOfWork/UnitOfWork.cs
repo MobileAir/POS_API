@@ -20,6 +20,7 @@ namespace DataAccess.UnitOfWork
         private ApiDbContext _context = null;
         private GenericRepository<User> _userRepository;
         private GenericRepository<Product> _productRepository;
+        private GenericRepository<Category> _categoryRepository;
         private GenericRepository<Error> _errorRepository;
         private GenericRepository<Token> _tokenRepository;
         #endregion
@@ -41,6 +42,19 @@ namespace DataAccess.UnitOfWork
                 if (this._productRepository == null)
                     this._productRepository = new GenericRepository<Product>(_context);
                 return _productRepository;
+            }
+        }
+
+        /// <summary>
+        /// Get/Set Property for category repository.
+        /// </summary>
+        public GenericRepository<Category> CategoryRepository
+        {
+            get
+            {
+                if (this._categoryRepository == null)
+                    this._categoryRepository = new GenericRepository<Category>(_context);
+                return _categoryRepository;
             }
         }
 
