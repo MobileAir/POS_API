@@ -1,9 +1,15 @@
-﻿@using MVC.Common
-@using MVC.ViewModels
-@{
-    //TODO: Call Categories get all that return list<CategoryDTO>
-}
+﻿@using MVC.DTOs
 
+@model IEnumerable<CategoryDTO>
+@{
+    //TODO: http://stackoverflow.com/questions/13225315/pass-data-to-layout-that-are-common-to-all-pages
+    // does not work and almost all sugestion in thits.. except bring back normal routing with RenderAction
+    var categories = new List<CategoryDTO>();
+    if (TempData["Categories"] != null)
+    {
+        categories = (List<CategoryDTO>) TempData["Categories"];
+    }
+}
 <div class="sidebar" data-color="purple" data-image="../../../Images/Theme/Material/sidebar-1.jpg">
     <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
@@ -20,9 +26,8 @@
     <div class="sidebar-wrapper">
         <ul class="nav">
             
-            <li class="active">
+            @*<li class="active">
                 <a href="/tile/sale">
-                    <!-- TODO: use custom route... Html.Action( mvc stack overflow exception action)-->
                     <i class="material-icons">payment</i>
                     <p>Sale</p>
                 </a>
@@ -76,7 +81,16 @@
                     <i class="material-icons text-gray">notifications</i>
                     <p>Smoothies</p>
                 </a>
-            </li>
+            </li>*@
+            @foreach (var category in Model)
+            {
+                <li>
+                    <a href="/tile/sale/@category.ID">
+                        <i class="material-icons">bubble_chart</i>
+                        <p>@category.Name</p>
+                    </a>
+                </li>
+            }
             <li class="active-pro">
                 <a href="/home">
                     <i class="material-icons">unarchive</i>

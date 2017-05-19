@@ -10,7 +10,7 @@ using MVC.ViewModels;
 
 namespace MVC.Controllers
 {
-    [TokenAuthCheckFilter]
+    
     [RoutePrefix("products")]
     public class ProductsController : Controller
     {

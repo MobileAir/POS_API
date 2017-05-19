@@ -12,7 +12,8 @@ namespace MVC
             #region DEFAULT
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                "~/Scripts/jquery-{version}.js"));
+                "~/Scripts/jquery-{version}.js",
+                 "~/Scripts/jquery.unobtrusive*"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                 "~/Scripts/jquery.validate*"));
@@ -36,7 +37,8 @@ namespace MVC
 
             // SCRIPTS
             bundles.Add(new ScriptBundle("~/js/theme/material/jquery").Include(
-                "~/Scripts/Theme/Material/jquery-3.1.0.min.js"));
+                "~/Scripts/Theme/Material/jquery-3.1.0.min.js",
+                 "~/Scripts/jquery.unobtrusive*"));
 
             bundles.Add(new ScriptBundle("~/js/jqueryval").Include(
                 "~/Scripts/jquery.validate*"));

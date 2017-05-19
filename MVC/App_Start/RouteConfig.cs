@@ -13,11 +13,12 @@ namespace MVC
 
             //routes.RouteExistingFiles = true;
 
-            //routes.MapRoute(
-            //    name: "Default",
-            //    url: "{controller}/{action}/{id}",
-            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            //);
+            // For _layout Partials.
+            routes.MapRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

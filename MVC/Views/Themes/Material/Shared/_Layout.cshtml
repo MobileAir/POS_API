@@ -54,7 +54,10 @@
     {
         <div class="wrapper">
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
-            @Html.Partial("_Sidebar")
+            @*@Html.Partial("_Sidebar")*@
+            @{
+                Html.RenderAction("GetAll", "Categories");
+            }
             @RenderBody()
         </div>
     }

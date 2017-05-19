@@ -7,12 +7,27 @@ using MVC.DTOs;
 
 namespace MVC.Controllers
 {
-    [TokenAuthCheckFilter]
+    
     [RoutePrefix("categories")]
     public class CategoriesController : Controller
     {
 
         // TODO: Make method callable from _Sidebar with AJAX
+        [Route("get-all")]
+        public PartialViewResult GetAll()
+        {
+            List<CategoryDTO> categories = null;
+
+            // why i do not get data back??? 500 internal server error....
+            var r = new TokenAuthCrudClient().Get<List<CategoryDTO>>("v1/Category/all", Session["Token"].ToString(), Request.UserAgent);
+            categories = r?.Data;
+            if (categories == null)
+            {
+                // ReSharper disable once Mvc.PartialViewNotResolved
+                return PartialView("_Sidebar", new List<CategoryDTO>());
+            }
+            return PartialView("_Sidebar", categories);
+        }
 
         // GET: Categories
         [Route("all")]

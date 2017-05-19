@@ -136,6 +136,7 @@
     <Compile Include="Common\ApiResponse.cs" />
     <Compile Include="Common\BasicAuthCrudClient.cs" />
     <Compile Include="Common\TokenAuthSecurityManager.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IpController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -218,6 +219,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -269,9 +272,11 @@
     <Content Include="Views\Themes\Material\Products\Index.cshtml" />
     <Content Include="Views\Themes\Material\User\SignUp.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -11,7 +11,7 @@ using WebApi.Filters;
 namespace WebApi.Controllers
 {
     [TokenAuthorize]
-    [RoutePrefix("v1/Categories")]
+    [RoutePrefix("v1/Category")]
     public class CategoryController : ApiController
     {
 
@@ -31,7 +31,6 @@ namespace WebApi.Controllers
 
         
         [Route("all")]
-        [Route("categories")]
         [HttpGet]
         [EnableQuery]
         public HttpResponseMessage Get()

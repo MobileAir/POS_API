@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Themes/Material/Shared/_Layout.cshtml";
-    var rowCount = 1;
+    //var rowCount = 1;
 }
 
 <div class="main-panel">
@@ -13,43 +13,10 @@
             <div class="row">
                 <div class="col-md-7" id="products">
                     @*<div class="row">*@
-
-                    @foreach (var item in Model)
-                    {
-
-                        if (rowCount % 3 == 0){
-                             @:<div class="row">
-                        }
-                                <div class="col-lg-4 col-md-4 col-sm-4">
-                                    <div class="card card-stats">
-                                        <div id="add-prod" class="card-header" data-background-color="orange" style="cursor: pointer;">
-                                            <i class="material-icons">add</i>
-                                        </div>
-                                        <div class="card-content">
-                                            <p class="category js-price">
-                                                <small>$</small>74.99
-                                            </p>
-                                            <h5 class="title js-name">
-                                                @item.Name
-                                            </h5>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="stats">
-                                                <i class="material-icons text-danger">warning</i> <a href="#pablo">25% off</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                if (rowCount % 3 == 0)
-                                {
-                                    @:</div>
-                                }
-                            
-                        {
-                            rowCount++;
-                        }
                     
-                    }
+                    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+                    @Html.Partial("_Products", Model)
+                    
                     @*</div>*@
                 </div>
                 <div class="col-md-5">
