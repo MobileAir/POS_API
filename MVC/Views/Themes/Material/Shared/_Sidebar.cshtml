@@ -85,7 +85,7 @@
             @foreach (var category in Model)
             {
                 <li>
-                    <a href="/tile/sale/@category.ID">
+                    <a data-id="@category.ID" href="/tile/sale/@category.ID">
                         <i class="material-icons">bubble_chart</i>
                         <p>@category.Name</p>
                     </a>

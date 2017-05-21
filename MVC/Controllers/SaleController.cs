@@ -42,7 +42,8 @@ namespace MVC.Controllers
         // http://stackoverflow.com/questions/32610270/how-to-render-partial-view-in-mvc5-via-ajax-call-to-a-controller-and-return-html
         // NEw wer MVC 5 ajax approach....might need to move id inside partial?
         [Route("sale/{category:int}")]
-        public PartialViewResult SaleByCategory(int category = 0)
+        [HttpGet]
+        public JsonResult SaleByCategory(int category = 0)
         {
             List<ProductDTO> products = null;
 
@@ -64,7 +65,7 @@ namespace MVC.Controllers
             }
 
             // ReSharper disable once Mvc.PartialViewNotResolved
-            return PartialView("_Products",products);
+            return Json(products, JsonRequestBehavior.AllowGet);
         }
     }
 }

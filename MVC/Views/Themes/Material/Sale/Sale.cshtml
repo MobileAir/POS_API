@@ -62,7 +62,7 @@
             }
             updateTotal();
 
-            $("#products #add-prod").click(function() {
+            $("#products").on("click","#add-prod", function() {
 
                 var $parent = $(this).parent();
                 var $price = $parent.find('.js-price');
@@ -101,6 +101,72 @@
                 $receiptBody.prepend(row);
                 updateTotal();
             });
+
+            var buildHtmlProducts = function (data) {
+                var rowCount = 1;
+                var html = "";
+                if (data.length < 1)
+                    return "<h5>No data for this type</h5>";
+                $.each(data, function (key, value) {
+                    
+                    if (rowCount % 3 == 0) {
+                        html += '<div class="row">';
+                    }
+
+                    html += '<div class="col-lg-4 col-md-4 col-sm-4">';
+                    html += '<div class="card card-stats">';
+                    html += '<div id="add-prod" class="card-header" data-background-color="orange" style="cursor: pointer;">';
+                    html += '<i class="material-icons">add</i>';
+                    html += '</div>';
+                    html += '<div class="card-content">';
+                    html += '<p class="category js-price">';
+                    html += '<small>$</small>74.99';
+                    html += '</p>';
+                    html += '<h5 class="title js-name">';
+                    html += value.Name;
+                    html += '</h5>';
+                    html += '</div>';
+                    html += '<div class="card-footer">';
+                    html += '<div class="stats">';
+                    html += '<i class="material-icons text-danger">warning</i> <a href="#pablo">25% off</a>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+
+                    if (rowCount % 3 == 0) {
+                        html += '</div>';
+                    }
+
+                    rowCount++;
+                });
+                return html;
+            } 
+
+            // _Sidebar, categories => Products
+            $('.sidebar-wrapper').on('click', 'li',
+                function (e) {
+                    e.preventDefault();
+                    var $anchor = $(this).find('a').first();
+                    console.log($anchor);
+                    var id = $anchor.data('id');
+                    $.ajax({
+                        url: '/tile/sale/' +id,
+                        type: "GET",
+                        success: function (data) {
+                            console.log(data);
+                            var $prod = $('#products');
+                            $prod.empty();
+                            $prod.html(buildHtmlProducts(data));
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+                        }
+                    });
+                });
+            
         });
     </script>
 }
