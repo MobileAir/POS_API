@@ -27,7 +27,7 @@ namespace Services
 
         #region Public member methods.
 
-        public bool IsTokenValid(string token, string ip, string userAgent)
+        public bool IsTokenValid(string token, string userAgent)
         {
             bool result = false;
 
@@ -60,13 +60,13 @@ namespace Services
                             var hashedPasword = user.Password;
 
                             // Hash the message with the key to generate a token.
-                            string computedToken = GenerateToken(username, hashedPasword, ip, userAgent, ticks);
+                            string computedToken = GenerateToken(username, hashedPasword, userAgent, ticks);
 
                             // Compare the computed token with the one supplied and ensure they match.
-                            //result = (token == computedToken);
+                            result = (token == computedToken);
 
                             // BYPASS until signup/signin fix...
-                            result = true; 
+                            //result = true;
                         }
                     }
                 }
@@ -93,9 +93,9 @@ namespace Services
         /// 4. Compare the computed token with the one supplied and ensure they match.
         /// </summary>
         /// TODO: add custom route
-        public string GenerateToken(string username, string password, string ip, string userAgent, long ticks)
+        public string GenerateToken(string username, string password, string userAgent, long ticks)
         {
-            string hash = string.Join(":", new string[] { username, ip, userAgent, ticks.ToString() });
+            string hash = string.Join(":", new string[] { username, userAgent, ticks.ToString() });
             string hashLeft = "";
             string hashRight = "";
 

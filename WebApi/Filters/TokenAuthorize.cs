@@ -2,11 +2,9 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 using Microsoft.Ajax.Utilities;
-using Services;
 using Services.Interface;
 
 namespace WebApi.Filters
@@ -20,22 +18,16 @@ namespace WebApi.Filters
         {
             var provider = 
                 actionContext.ControllerContext.Configuration.DependencyResolver.GetService(typeof(ITokenAuthServices)) as ITokenAuthServices;
-
             try
             {
                 if (actionContext.Request.Headers.Contains(Token))
                 {
                     var tokenValue = actionContext.Request.Headers.GetValues(Token).First();
-
-                    // TODO: ip... to be tested live
-                    var ip =
-                        IPAddress.Parse(((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
-                            .ToString();
                     
-                    var userAgent = actionContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
-
+                    var userAgent = actionContext.Request.Headers.GetValues(ClientUserAgent)?.First(); 
+                    
                     // Validate Token
-                    if (provider != null && !ip.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, ip, userAgent))
+                    if (provider != null && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, userAgent))
                     {
                         // let controller handle the resp, code and obj return
                     }
@@ -45,16 +37,18 @@ namespace WebApi.Filters
                 }
                 else
                 {
-                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                    actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "No Token!" };
                 }
             }
             catch (Exception e)
             {
                 // log e
                 // TODO: Should not use Try/catch for logic execution! What if this would throw e as wel... then it would dump a huge error revealing lot of info
-                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+                actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Something failed..." }; ;
             }
             base.OnAuthorization(actionContext);
         }
     }
+
+    
 }
