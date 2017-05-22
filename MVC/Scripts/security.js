@@ -16,7 +16,7 @@ var SecurityManager = {
             return "";
 
         // Get the (C# compatible) ticks to use as a timestamp. http://stackoverflow.com/a/7968483/2596404
-        var ticks = ((new Date().getTime() * 30000) + 621355968000000000);
+        var ticks = ((new Date().getTime() * 10000) + 621355968000000000);
 
         var userAgent = navigator.userAgent.replace(/ \.NET.+;/, '');
 
