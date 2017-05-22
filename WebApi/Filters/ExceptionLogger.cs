@@ -43,16 +43,15 @@ namespace WebApi.Filters
                     provider?.Create(errorDto);
                 }
 
-
-                //Send an email notification -> can use smtp4dev
-                MailMessage email = new MailMessage();
-                email.From = new MailAddress("WebApi@PDV.com");
-                email.To.Add(new MailAddress(ConfigurationManager.AppSettings["ErrorEmail"]));
-                email.Subject = "Api - An error has occured";
-                email.Body = context.Exception.Message + Environment.NewLine
-                             + context.Exception.StackTrace;
-                SmtpClient client = new SmtpClient("localhost");
-                client.Send(email);
+                // REMOVED FOR ALPHA
+                //MailMessage email = new MailMessage();
+                //email.From = new MailAddress("WebApi@PDV.com");
+                //email.To.Add(new MailAddress(ConfigurationManager.AppSettings["ErrorEmail"]));
+                //email.Subject = "Api - An error has occured";
+                //email.Body = context.Exception.Message + Environment.NewLine
+                //             + context.Exception.StackTrace;
+                //SmtpClient client = new SmtpClient("localhost");
+                //client.Send(email);
             }
             catch (Exception e)
             {
