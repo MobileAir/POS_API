@@ -166,7 +166,12 @@
                         }
                     });
                 });
-            
+
+            // Sign out _ContentNav
+            $('#sign-out').click(function (e) {
+                e.preventDefault();
+                SecurityManager.logout();
+            });
         });
     </script>
 }

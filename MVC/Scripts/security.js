@@ -100,9 +100,12 @@ var SecurityManager = {
 
         localStorage.removeItem('SecurityManager.key');
         SecurityManager.key = null;
-
-        $.get('user/signout', function () {
+        var url = window.location.origin;
+        var uri = '/user/signout';
+        console.log(url + uri);
+        $.get(url+uri, function () {
             alert('User logged out!');
+            window.location.assign("/home");
         }).fail(function (error) {
             alert('HTTP Error ' + error.status);
         });

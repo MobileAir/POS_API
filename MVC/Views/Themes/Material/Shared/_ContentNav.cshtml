@@ -46,9 +46,9 @@
                     </a>
                 </li>
                 <li>
-                    <a id="sign-out">
+                    <a id="sign-out" href="#">
                         <i class="material-icons">security</i>
-                        <p class="hidden-lg hidden-md">Profile</p>
+                        <p class="hidden-lg hidden-md">Sign out</p>
                     </a>
                 </li>
             </ul>
@@ -69,9 +69,11 @@
 @section scripts
 {
     <script>
-        $('#sign-out').click(function (e) {
-            e.preventDefault();
-            SecurityManager.logout();
+        $(function() {
+            //$('#sign-out').click(function (e) {
+            //    e.preventDefault();
+            //    SecurityManager.logout();
+            //});
         });
     </script>
 }
