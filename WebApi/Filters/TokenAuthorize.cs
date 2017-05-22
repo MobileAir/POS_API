@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -30,9 +31,17 @@ namespace WebApi.Filters
                     var userAgent = actionContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
 
                     // Validate Token
-                    if (provider != null && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, userAgent))
+                    if (provider != null && !userAgent.IsNullOrWhiteSpace())
                     {
-                        // let controller handle the resp, code and obj return
+                        var user = provider.IsTokenValid(tokenValue, userAgent);
+                        if (user != null)
+                        {
+                            // let controller handle the resp, code and obj return
+                            //actionContext.RequestContext.RouteData.Values.Add("UserDTO", user); // for MVC
+                            actionContext.Request.Properties.Add(new KeyValuePair<string, object>("UserDTO", user));
+                        }
+                        else
+                            actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Validation Fail" };
                     }
                     else
                         actionContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Invalid Request" };

@@ -144,8 +144,10 @@
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
+    <Compile Include="DTOs\IDTO.cs" />
     <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="DTOs\RegisterDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Filters\ExceptionLoggingFilter.cs" />
     <Compile Include="Filters\TokenAuthCheckFilter.cs" />
@@ -300,7 +302,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59727</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

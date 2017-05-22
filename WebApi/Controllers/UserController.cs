@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Web.Http;
 using Services.DTOs;
 using Services.Interface;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
@@ -16,7 +17,17 @@ namespace WebApi.Controllers
         {
             _userServices = userServices;
         }
-        
+
+        [Route("login")]
+        [HttpPost]
+        [TokenAuthorize]
+        public HttpResponseMessage Login()
+        {
+            object user = null;
+            Request.Properties.TryGetValue("UserDTO", out user);
+            return Request.CreateResponse(HttpStatusCode.OK, user);
+        }
+
         [Route("register")]
         [AllowAnonymous]
         [HttpPost]

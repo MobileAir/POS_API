@@ -14,13 +14,25 @@ namespace MVC.Controllers
         // GET: Login
         [Route("signin")]
         [HttpGet]
-        public ActionResult Login(string token)
+        public JsonResult Login(string token)
         {
             // http://www.primaryobjects.com/2015/05/08/token-based-authentication-for-web-service-apis-in-c-mvc-net/
             // http://www.primaryobjects.com/2010/12/05/web-gardens-web-farms-clouds-and-session-state-in-c-asp-net/
-            Session[SecurityToken] = token;
-            //return RedirectToAction("Sale", "Sale"); // let js handle the redirection
-            return Json(new { data = "sign in succcess!"}, JsonRequestBehavior.AllowGet);
+            
+            
+            //return Json(new { data = "sign in succcess!"}, JsonRequestBehavior.AllowGet);
+
+            var response = new TokenAuthCrudClient().
+                    AsyncPost<UserDTO>($"v1/user/login", token, Request.UserAgent);
+            if (response.Success)
+            {
+                Session[SecurityToken] = token;
+                if (response.Data?.IsSuperUser == true)
+                    Session["SuperUser"] = token;
+                return Json(new {data = "sign in succcess!"}, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { data = "Fail" }, JsonRequestBehavior.AllowGet);
         }
 
         [Route("signout")]
@@ -42,7 +54,7 @@ namespace MVC.Controllers
         public ActionResult SignUp() { return View(); }
         [Route("register")]
         [HttpPost]
-        public ActionResult Register(string keys, string name, string email)
+        public JsonResult Register(string keys, string name, string email)
         {
             var vm = new RegisterDTO() {Email = email, Name = name, Keys = keys};
 
