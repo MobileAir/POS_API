@@ -34,17 +34,17 @@ namespace WebApi.ActionFilters
                 {
                     var tokenValue = filterContext.Request.Headers.GetValues(Token).First();
 
-                    // TODO: ip... to be tested live
-                    var ip =
-                        IPAddress.Parse(((HttpContextBase)filterContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
-                            .ToString();
+                    //// TODO: ip... to be tested live
+                    //var ip =
+                    //    IPAddress.Parse(((HttpContextBase)filterContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
+                    //        .ToString();
                     var userAgent = filterContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
 
                     //HTTP_CLIENT_USER_AGENT
                     //var userAgent = ((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.Params["HTTP_CLIENT_USER_AGENT"];
 
                     // Validate Token
-                    if (provider != null && !ip.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, ip, userAgent))
+                    if (provider != null && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, userAgent))
                     {
                         // let controller handle the resp, code and obj return
                     }
