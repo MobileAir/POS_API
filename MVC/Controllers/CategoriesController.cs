@@ -29,6 +29,28 @@ namespace MVC.Controllers
             return PartialView("_Sidebar", categories);
         }
 
+        [Route("get-admin")]
+        public PartialViewResult GetAdmin()
+        {
+            List<CategoryDTO> categories = new List<CategoryDTO>()
+            {
+                new CategoryDTO() {Name = "Sales"},
+                new CategoryDTO() {Name = "Products"},
+                new CategoryDTO() {Name = "Staff"},
+                new CategoryDTO() {Name = "Reports"}
+            };
+
+            //// why i do not get data back??? 500 internal server error....
+            //var r = new TokenAuthCrudClient().Get<List<CategoryDTO>>("v1/Category/all", Session["Token"].ToString(), Request.UserAgent);
+            //categories = r?.Data;
+            //if (categories == null)
+            //{
+            //    // ReSharper disable once Mvc.PartialViewNotResolved
+            //    return PartialView("_Sidebar", new List<CategoryDTO>());
+            //}
+            return PartialView("_Sidebar", categories);
+        }
+
         // GET: Categories
         [Route("all")]
         public ActionResult Index(string data = null)

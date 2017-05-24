@@ -16,12 +16,23 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-
+@if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+{
     <div class="logo">
         <a href="/home" class="simple-text">
-            Username logged in
+            Hi, Mr. Admin
         </a>
     </div>
+}
+else if (Session["Token"] != null)
+{
+    <div class="logo">
+        <a href="/home" class="simple-text">
+            Hi, Staff Member
+        </a>
+    </div>
+}
+    
 
     <div class="sidebar-wrapper">
         <ul class="nav">

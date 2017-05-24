@@ -50,7 +50,7 @@
        </nav>
    }
    
-    @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    @*@if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
     {
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
@@ -64,18 +64,29 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Home", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                        <li class="pull-right">@Html.ActionLink("Products", "Index", "Products")</li>
+                        <li><a href="#">Sales</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Staff</a></li>
+                        <li><a href="#">Reports</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-    }
+    }*@
 
-<div class="">
-    @if (Session["Token"] != null)
+<div class="">  
+    @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    {
+        <div class="wrapper">
+            @* ReSharper disable once Mvc.PartialViewNotResolved *@
+            @*@Html.Partial("_Sidebar")*@
+            @{
+                Html.RenderAction("GetAdmin", "Categories");
+            }
+            @RenderBody()
+        </div>
+    }
+    else if (Session["Token"] != null )
     {
         <div class="wrapper">
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
@@ -89,7 +100,7 @@
     else
     {
         <div class="wrapper" style="background-image: url(../../../Images/Theme/Material/cover.jpeg); background-size: cover">
-            
+
             @RenderBody()
         </div>
     }
