@@ -87,8 +87,9 @@ namespace MVC.Common
                 else
                     return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
-                //TODO: do check for null bef convert
-                var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+                StringContent content = null;
+                if (o != null)
+                    content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
                     var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
                     {
@@ -152,10 +153,10 @@ namespace MVC.Common
                 else
                     return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
-                //TODO: do check for null bef convert
+                
                 StringContent content = null; 
                 if(o != null)
-                content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+                    content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
                     var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
                     {

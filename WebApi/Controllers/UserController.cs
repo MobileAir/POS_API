@@ -42,16 +42,16 @@ namespace WebApi.Controllers
             var hash = parts[0];
             var username = new string(parts[1].ToCharArray().Reverse().ToArray());
 
-            var id = _userServices.Register(
+            var user = _userServices.Register(
                     registerDto.Email,
                     registerDto.Name,
                     hash,
                     username
                 );
-            if (id == 0)
-                Request.CreateResponse(HttpStatusCode.Conflict, id);
+            if (user == null)
+                Request.CreateResponse(HttpStatusCode.Conflict);
 
-            return Request.CreateResponse(HttpStatusCode.Created, id);
+            return Request.CreateResponse(HttpStatusCode.Created, user);
         }
 
     }

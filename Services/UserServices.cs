@@ -25,13 +25,13 @@ namespace Services
 
         #region TokenAuth
 
-        public int Register(string email, string name, string hash, string username)
+        public RegisterDTO Register(string email, string name, string hash, string username)
         {
             try
             {
                 var exists = _unitOfWork.UserRepository.GetSingle(x => x.Email == email);
                 if (exists != null)
-                    return 0;
+                    return null;
 
                 var user = new User()
                 {
@@ -44,12 +44,12 @@ namespace Services
                 };
                 _unitOfWork.UserRepository.Insert(user);
                 _unitOfWork.Save();
-                return user.UserId;
+                return new RegisterDTO() {Email = user.Email, Name = user.Name};
             }
             catch (Exception e)
             {
                 // log
-                return 0;
+                return null;
             }
         }
 
