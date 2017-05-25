@@ -93,14 +93,31 @@ else if (Session["Token"] != null)
                     <p>Smoothies</p>
                 </a>
             </li>*@
-            @foreach (var category in Model)
+            
+            
+            @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
             {
-                <li>
-                    <a data-id="@category.ID" href="/tile/sale/@category.ID">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>@category.Name</p>
-                    </a>
-                </li>
+                foreach (var category in Model)
+                {
+                    <li>
+                        <a data-id="@category.ID" href="/super/@category.Name">
+                            <i class="material-icons">bubble_chart</i>
+                            <p>@category.Name</p>
+                        </a>
+                    </li>
+                }
+            }
+            else if (Session["Token"] != null)
+            {
+                foreach (var category in Model)
+                {
+                    <li>
+                        <a data-id="@category.ID" href="/tile/sale/@category.ID">
+                            <i class="material-icons">bubble_chart</i>
+                            <p>@category.Name</p>
+                        </a>
+                    </li>
+                }
             }
             <li class="active-pro">
                 <a href="/home">
