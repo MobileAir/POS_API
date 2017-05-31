@@ -12,7 +12,7 @@ namespace MVC.Controllers
         {
             ViewBag.Message = "Dashboard.";
 
-            return View("Dashboard");
+            return View();
         }
 
         [Route("Reports")]
@@ -20,7 +20,7 @@ namespace MVC.Controllers
         {
             ViewBag.Message = "Dashboard.";
 
-            return View("Dashboard");
+            return View();
         }
 
         [Route("Staff")]
@@ -28,7 +28,7 @@ namespace MVC.Controllers
         {
             ViewBag.Message = "Dashboard.";
 
-            return View("Dashboard");
+            return View();
         }
 
         [Route("Products")]
@@ -36,7 +36,7 @@ namespace MVC.Controllers
         {
             ViewBag.Message = "Dashboard.";
 
-            return View("Dashboard");
+            return View();
         }
     }
 }

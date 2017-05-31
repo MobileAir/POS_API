@@ -27,7 +27,7 @@ namespace MVC.Controllers
                 // ReSharper disable once Mvc.PartialViewNotResolved
                 return PartialView("_Sidebar", new List<CategoryDTO>());
             }
-            return PartialView("_Sidebar", categories);
+            return PartialView("_Sidebar", categories.Where(x => x.IsAdmin == false).ToList());
         }
 
         [Route("get-admin")]

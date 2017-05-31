@@ -105,7 +105,14 @@
         </div>
     }
     
-
+    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+    @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    {
+        @* ReSharper disable once Mvc.PartialViewNotResolved *@
+        @Html.Partial("_Widget")
+    }
+    
+    
     <footer class="footer">
         <div class="container-fluid">
             <nav class="pull-left">
