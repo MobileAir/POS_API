@@ -206,5 +206,11 @@
             });
         // END: GLOBAL MODAL CAPTURE/ASSIGN ON OPEN/CLOSE EVENT
 
+        // Sign out _ContentNav
+        $('#sign-out').click(function (e) {
+            e.preventDefault();
+            SecurityManager.logout();
+        });
+
     });
 </script>
