@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Ajax.Utilities;
+using MVC.DTOs;
 using Newtonsoft.Json;
 namespace MVC.Common
 {
@@ -86,8 +87,9 @@ namespace MVC.Common
                 else
                     return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
-                //TODO: do check for null bef convert
-                var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+                StringContent content = null;
+                if (o != null)
+                    content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
                     var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
                     {
@@ -139,7 +141,7 @@ namespace MVC.Common
         /// <param name="token"></param>
         /// <param name="userAgent"></param>
         /// <returns></returns>
-        public ApiResponse<T> AsyncPost<T>(string url, string token, string userAgent, T o) where T : class
+        public ApiResponse<T> AsyncPost<T>(string url, string token, string userAgent, T o = null) where T : class
         {
             var result = new ApiResponse<T>();
             try
@@ -151,8 +153,10 @@ namespace MVC.Common
                 else
                     return new ApiResponse<T>() { ReasonPhrase = "No token or proper user agent were included in the request", StatusCode = HttpStatusCode.ExpectationFailed };
 
-                //TODO: do check for null bef convert
-                var content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
+                
+                StringContent content = null; 
+                if(o != null)
+                    content = new StringContent(JsonConvert.SerializeObject(o), Encoding.UTF8, "application/json");
                 using (
                     var response = request.PostAsync(url, content).ContinueWith((taskWithResponse) =>
                     {
@@ -168,8 +172,19 @@ namespace MVC.Common
                             else if (taskWithResponse.Result.IsSuccessStatusCode)
                             {
                                 var jsonString = taskWithResponse.Result.Content.ReadAsStringAsync();
-                                var data = JsonConvert.DeserializeObject(jsonString.Result);
-                                result.Message = data.ToString();
+                                if (typeof(T) == typeof(IDTO))
+                                {
+                                    var data = JsonConvert.DeserializeObject<T>(jsonString.Result);
+                                    result.Success = true;
+                                    result.Data = data;
+                                }
+                                else
+                                {
+                                    var data = JsonConvert.DeserializeObject(jsonString.Result);
+                                    result.Message = data.ToString();
+                                    result.Success = true;
+                                }
+                                
                             }
                             else
                             {

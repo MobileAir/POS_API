@@ -25,13 +25,13 @@ namespace Services
 
         #region TokenAuth
 
-        public int Register(string email, string name, string hash, string username)
+        public RegisterDTO Register(string email, string name, string hash, string username)
         {
             try
             {
                 var exists = _unitOfWork.UserRepository.GetSingle(x => x.Email == email);
                 if (exists != null)
-                    return 0;
+                    return null;
 
                 var user = new User()
                 {
@@ -44,12 +44,12 @@ namespace Services
                 };
                 _unitOfWork.UserRepository.Insert(user);
                 _unitOfWork.Save();
-                return user.UserId;
+                return new RegisterDTO() {Email = user.Email, Name = user.Name};
             }
             catch (Exception e)
             {
                 // log
-                return 0;
+                return null;
             }
         }
 
@@ -115,22 +115,24 @@ namespace Services
         {
             try
             {
-                var exist = _unitOfWork.UserRepository.GetFirst(x => x.Username == userDto.Username);
-                if (exist != null) return "Username already exist";
+                //  WAS USE AS QUICK USER INSERT IN BASIC AUTH TESTING
+                
+                //var exist = _unitOfWork.UserRepository.GetFirst(x => x.Username == userDto.Username);
+                //if (exist != null) return "Username already exist";
 
-                var user = new User();
+                //var user = new User();
 
-                var salt = GenerateSaltValue();
-                //salt = ToBase64(salt);
-                var hashedPassword = HashPassword(userDto.Password, salt);
+                //var salt = GenerateSaltValue();
+                ////salt = ToBase64(salt);
+                //var hashedPassword = HashPassword(userDto.Password, salt);
 
-                user.Username = userDto.Username;
-                user.Salt = salt;
-                user.Password = hashedPassword;
-                user.RequestAllowed = 10;
-                user.Name = "Temporary Name";
-                _unitOfWork.UserRepository.Insert(user);
-                _unitOfWork.Save();
+                //user.Username = userDto.Username;
+                //user.Salt = salt;
+                //user.Password = hashedPassword;
+                //user.RequestAllowed = 10;
+                //user.Name = "Temporary Name";
+                //_unitOfWork.UserRepository.Insert(user);
+                //_unitOfWork.Save();
 
                 return "Success";
             }

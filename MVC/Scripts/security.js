@@ -39,7 +39,6 @@ var SecurityManager = {
 
         // Set the key to a hash of the user's password + salt.
         SecurityManager.key = SecurityManager.key || CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
-        //alert(SecurityManager.key);
         
         // Persist key pieces.
         if (SecurityManager.username) {
@@ -76,7 +75,6 @@ var SecurityManager = {
         // Persist key piece.
         localStorage['SecurityManager.key'] = SecurityManager.key;
         
-        
         return [SecurityManager.key, username.split("").reverse().join("")].join(':');
     },
 
@@ -89,9 +87,12 @@ var SecurityManager = {
 
         localStorage.removeItem('SecurityManager.key');
         SecurityManager.key = null;
-
-        $.get('user/signout', function () {
+        var url = window.location.origin;
+        var uri = '/user/signout';
+        console.log(url + uri);
+        $.get(url+uri, function () {
             alert('User logged out!');
+            window.location.assign("/home");
         }).fail(function (error) {
             alert('HTTP Error ' + error.status);
         });

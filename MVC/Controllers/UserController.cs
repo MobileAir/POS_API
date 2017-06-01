@@ -4,23 +4,45 @@ using MVC.Common;
 using MVC.DTOs;
 using MVC.ViewModels;
 
+// TODO all redirect to action will not conserve data from view bag...of course! doh!
 namespace MVC.Controllers
 {
     [RoutePrefix("user")]
     public class UserController : Controller
     {
         private const string SecurityToken = "Token";
-
-        // GET: Login
+        
         [Route("signin")]
-        [HttpGet]
-        public ActionResult Login(string token)
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(FormCollection form)
         {
-            // http://www.primaryobjects.com/2015/05/08/token-based-authentication-for-web-service-apis-in-c-mvc-net/
-            // http://www.primaryobjects.com/2010/12/05/web-gardens-web-farms-clouds-and-session-state-in-c-asp-net/
-            Session[SecurityToken] = token;
-            //return RedirectToAction("Sale", "Sale"); // let js handle the redirection
-            return Json(new { data = "sign in succcess!"}, JsonRequestBehavior.AllowGet);
+            try
+            {
+                var token = form["token"].ToString();
+
+                var response = new TokenAuthCrudClient().Post<UserDTO>($"v1/user/login", token, Request.UserAgent, null);
+                if (response.Success)
+                {
+                    Session[SecurityToken] = token;
+                    if (response.Data?.IsSuperUser == true)
+                    {
+                        Session["SuperUser"] = token;
+                        return RedirectToAction("Dashboard", "Home");
+                    }
+                    //return Json(new {data = "sign in succcess!"}, JsonRequestBehavior.AllowGet);
+                    return RedirectToAction("Sale", "Sale");
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Issue while trying to log you in. Please try again.";
+                return RedirectToAction("Home", "Home");
+            }
+
+            ViewBag.Message = "Issue while trying to log you in. Please try again.";
+            return RedirectToAction("Home", "Home");
         }
 
         [Route("signout")]
@@ -42,16 +64,33 @@ namespace MVC.Controllers
         public ActionResult SignUp() { return View(); }
         [Route("register")]
         [HttpPost]
-        public ActionResult Register(string keys, string name, string email)
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(FormCollection form)
         {
-            var vm = new RegisterDTO() {Email = email, Name = name, Keys = keys};
+            try
+            {
+                var email = form["email"].ToString();
+                var name = form["name"].ToString();
+                var keys = form["keys"].ToString();
 
-            var response = new TokenAuthCrudClient().
-                    AsyncPost($"v1/user/register", "No token required", Request.UserAgent, vm);
-            if (response.Success)
-                return Json(new { message = $"Sign up succcess - userId: {response.Message} ", redirect = "/home"});
+                var vm = new RegisterDTO() {Email = email, Name = name, Keys = keys};
 
-            return Json(new { message = "Fail to register.." });
+                var response = new TokenAuthCrudClient().Post<RegisterDTO>($"v1/user/register", "No token required", Request.UserAgent, vm);
+                if (response.Success)
+                {
+                    ViewBag.Message = "Sign up successful!";
+                    return RedirectToAction("Home", "Home");
+                }
+            }
+            catch (Exception e)
+            {
+                ViewBag.Message = "Issue while trying to sign you up. Please try again.";
+                return RedirectToAction("SignUp", "User");
+            }
+
+            ViewBag.Message = "Issue while trying to sign you up. Please try again.";
+            return RedirectToAction("SignUp", "User");
             //return RedirectToRoutePermanent("/home", new {message = "Sign up succcess!"});
         }
 

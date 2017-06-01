@@ -49,8 +49,44 @@
            </div>
        </nav>
    }
-<div class="">
-    @if (Session["Token"] != null)
+   
+    @*@if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Admin navigation", "Home", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">Sales</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Staff</a></li>
+                        <li><a href="#">Reports</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }*@
+
+<div class="">  
+    @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    {
+        <div class="wrapper">
+            @* ReSharper disable once Mvc.PartialViewNotResolved *@
+            @*@Html.Partial("_Sidebar")*@
+            @{
+                Html.RenderAction("GetAdmin", "Categories");
+            }
+            @RenderBody()
+        </div>
+    }
+    else if (Session["Token"] != null )
     {
         <div class="wrapper">
             @* ReSharper disable once Mvc.PartialViewNotResolved *@
@@ -64,12 +100,19 @@
     else
     {
         <div class="wrapper" style="background-image: url(../../../Images/Theme/Material/cover.jpeg); background-size: cover">
-            
+
             @RenderBody()
         </div>
     }
     
-
+    @* ReSharper disable once Mvc.PartialViewNotResolved *@
+    @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+    {
+        @* ReSharper disable once Mvc.PartialViewNotResolved *@
+        @Html.Partial("_Widget")
+    }
+    
+    
     <footer class="footer">
         <div class="container-fluid">
             <nav class="pull-left">
@@ -162,6 +205,12 @@
                 $target.val($('.num-pad-input').val());
             });
         // END: GLOBAL MODAL CAPTURE/ASSIGN ON OPEN/CLOSE EVENT
+
+        // Sign out _ContentNav
+        $('#sign-out').click(function (e) {
+            e.preventDefault();
+            SecurityManager.logout();
+        });
 
     });
 </script>

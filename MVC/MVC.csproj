@@ -132,6 +132,7 @@
     <Compile Include="Common\BasicAuthCrudClient.cs" />
     <Compile Include="Common\TokenAuthSecurityManager.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IpController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -139,10 +140,13 @@
     <Compile Include="Controllers\SaleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DTOs\CategoryDTO.cs" />
+    <Compile Include="DTOs\IDTO.cs" />
     <Compile Include="DTOs\ProductDTO.cs" />
     <Compile Include="DTOs\RegisterDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Filters\BasicAuthTokenFilter.cs" />
     <Compile Include="Filters\ExceptionLoggingFilter.cs" />
+    <Compile Include="Filters\SuperUserCheckFilter.cs" />
     <Compile Include="Filters\TokenAuthCheckFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,6 +163,7 @@
     <Content Include="Content\Theme\Material\css\bootstrap.min.css" />
     <Content Include="Content\Theme\Material\css\demo.css" />
     <Content Include="Content\Theme\Material\css\material-dashboard.css" />
+    <Content Include="Controllers\AlterCate.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -271,6 +276,11 @@
     <Content Include="Views\Themes\Material\User\SignUp.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
     <Content Include="Views\Themes\Material\Shared\_Products.cshtml" />
+    <Content Include="Views\Themes\Material\Admin\Sales.cshtml" />
+    <Content Include="Views\Themes\Material\Admin\Staff.cshtml" />
+    <Content Include="Views\Themes\Material\Admin\Products.cshtml" />
+    <Content Include="Views\Themes\Material\Admin\Reports.cshtml" />
+    <Content Include="Views\Themes\Material\Shared\_Widget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -298,7 +308,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>59727</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

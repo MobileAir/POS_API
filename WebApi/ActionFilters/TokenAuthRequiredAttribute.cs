@@ -28,41 +28,41 @@ namespace WebApi.ActionFilters
             var provider = filterContext.ControllerContext.Configuration
                 .DependencyResolver.GetService(typeof(ITokenAuthServices)) as ITokenAuthServices;
 
-            try
-            {
-                if (filterContext.Request.Headers.Contains(Token))
-                {
-                    var tokenValue = filterContext.Request.Headers.GetValues(Token).First();
+            //try
+            //{
+            //    if (filterContext.Request.Headers.Contains(Token))
+            //    {
+            //        var tokenValue = filterContext.Request.Headers.GetValues(Token).First();
 
-                    // TODO: ip... to be tested live
-                    var ip =
-                        IPAddress.Parse(((HttpContextBase)filterContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
-                            .ToString();
-                    var userAgent = filterContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
+            //        //// TODO: ip... to be tested live
+            //        //var ip =
+            //        //    IPAddress.Parse(((HttpContextBase)filterContext.Request.Properties["MS_HttpContext"]).Request.UserHostAddress)
+            //        //        .ToString();
+            //        var userAgent = filterContext.Request.Headers.GetValues(ClientUserAgent)?.First(); // good sent with httpclient request since it returns null with Request.Headers.GetValues("User-Agent")
 
-                    //HTTP_CLIENT_USER_AGENT
-                    //var userAgent = ((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.Params["HTTP_CLIENT_USER_AGENT"];
+            //        //HTTP_CLIENT_USER_AGENT
+            //        //var userAgent = ((HttpContextBase)actionContext.Request.Properties["MS_HttpContext"]).Request.Params["HTTP_CLIENT_USER_AGENT"];
 
-                    // Validate Token
-                    if (provider != null && !ip.IsNullOrWhiteSpace() && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, userAgent))
-                    {
-                        // let controller handle the resp, code and obj return
-                    }
-                    else
-                        filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Invalid Request" };
+            //        // Validate Token
+            //        if (provider != null && !userAgent.IsNullOrWhiteSpace() && provider.IsTokenValid(tokenValue, userAgent))
+            //        {
+            //            // let controller handle the resp, code and obj return
+            //        }
+            //        else
+            //            filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized) { ReasonPhrase = "Invalid Request" };
 
-                }
-                else
-                {
-                    filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-                }
-            }
-            catch (Exception e)
-            {
-                // log e
-                // TODO: Should not use Try/catch for logic execution! What if this would throw e as wel... then it would dump a huge error revealing lot of info
-                filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-            }
+            //    }
+            //    else
+            //    {
+            //        filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            //    }
+            //}
+            //catch (Exception e)
+            //{
+            //    // log e
+            //    // TODO: Should not use Try/catch for logic execution! What if this would throw e as wel... then it would dump a huge error revealing lot of info
+            //    filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            //}
 
             base.OnActionExecuting(filterContext);
 

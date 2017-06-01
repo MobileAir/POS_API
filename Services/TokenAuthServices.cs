@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
+using DataAccess.Models;
 using DataAccess.UnitOfWork;
+using Services.DTOs;
 using Services.Interface;
 
 namespace Services
@@ -27,9 +30,9 @@ namespace Services
 
         #region Public member methods.
 
-        public bool IsTokenValid(string token, string userAgent)
+        public UserDTO IsTokenValid(string token,string userAgent)
         {
-            bool result = false;
+            UserDTO result = null;
 
             try
             {
@@ -63,10 +66,12 @@ namespace Services
                             string computedToken = GenerateToken(username, hashedPasword, userAgent, ticks);
 
                             // Compare the computed token with the one supplied and ensure they match.
-                            result = (token == computedToken);
-
-                            // BYPASS until signup/signin fix...
-                            //result = true;
+                            if (token == computedToken)
+                            {
+                                Mapper.CreateMap<User, UserDTO>();
+                                result = Mapper.Map<User, UserDTO>(user);
+                            }
+                                
                         }
                     }
                 }

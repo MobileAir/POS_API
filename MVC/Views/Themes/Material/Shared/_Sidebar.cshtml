@@ -16,12 +16,23 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-
+@if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
+{
     <div class="logo">
         <a href="/home" class="simple-text">
-            Username logged in
+            Hi, Mr. Admin
         </a>
     </div>
+}
+else if (Session["Token"] != null)
+{
+    <div class="logo">
+        <a href="/home" class="simple-text">
+            Hi, Staff Member
+        </a>
+    </div>
+}
+    
 
     <div class="sidebar-wrapper">
         <ul class="nav">
@@ -82,14 +93,31 @@
                     <p>Smoothies</p>
                 </a>
             </li>*@
-            @foreach (var category in Model)
+            
+            
+            @if (Session["SuperUser"] != null && Session["Token"] != null && Session["SuperUser"] == Session["Token"])
             {
-                <li>
-                    <a data-id="@category.ID" href="/tile/sale/@category.ID">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>@category.Name</p>
-                    </a>
-                </li>
+                foreach (var category in Model)
+                {
+                    <li>
+                        <a data-id="@category.ID" href="/super/@category.Name">
+                            <i class="material-icons">bubble_chart</i>
+                            <p>@category.Name</p>
+                        </a>
+                    </li>
+                }
+            }
+            else if (Session["Token"] != null)
+            {
+                foreach (var category in Model)
+                {
+                    <li>
+                        <a data-id="@category.ID" href="/tile/sale/@category.ID">
+                            <i class="material-icons">bubble_chart</i>
+                            <p>@category.Name</p>
+                        </a>
+                    </li>
+                }
             }
             <li class="active-pro">
                 <a href="/home">
