@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using MVC.Filters;
@@ -26,6 +27,33 @@ namespace MVC.Controllers
                 // ReSharper disable once Mvc.PartialViewNotResolved
                 return PartialView("_Sidebar", new List<CategoryDTO>());
             }
+            return PartialView("_Sidebar", categories.Where(x => x.IsAdmin == false).ToList());
+        }
+
+        [Route("get-admin")]
+        public PartialViewResult GetAdmin()
+        {
+            // TODO: These categories should come from DB, add column Admin true for cats for admin.
+            // name shuld point to action in Area/Admin
+            // Then on each action show template data... 
+            List<DTOs.CategoryDTO> defaults = new List<CategoryDTO>()
+                {
+                    new CategoryDTO() {Name = "Sales"},
+                    new CategoryDTO() {Name = "Products"},
+                    new CategoryDTO() {Name = "Staff"},
+                    new CategoryDTO() {Name = "Reports"}
+                };
+            List<CategoryDTO> categories = null;
+            var r = new TokenAuthCrudClient().Get<List<CategoryDTO>>("v1/Category/all", Session["Token"].ToString(), Request.UserAgent);
+            if (r?.Data == null)
+                categories = defaults;
+            else
+            {
+                categories = r.Data.Where(x => x.IsAdmin == true).ToList();
+                if (!categories.Any())
+                    categories = defaults;
+            }
+            // ReSharper disable once Mvc.PartialViewNotResolved
             return PartialView("_Sidebar", categories);
         }
 

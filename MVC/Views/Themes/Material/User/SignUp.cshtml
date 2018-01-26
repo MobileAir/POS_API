@@ -17,17 +17,25 @@
                     <div class="card" style="background-color: rgba(213, 240, 251, 0.3)">
                         <div class="card-header" data-background-color="blue">
                             <h4 class="title">Sign Up</h4>
-                            <p class="category">Enter an email for validation, an Access Code and a PIN</p>
+                            @if (ViewBag.Message != null)
+                            {
+                                <p class="category text-danger">@ViewBag.Message</p>
+                            }
+                            else
+                            {
+                                <p class="category">Enter an email for validation, an Access Code and a PIN</p>
+                            }
                         </div>
                         <div class="card-content">
-                            <form>
+                            <form method="post" action="/user/register" id="sign-up">
+                                @Html.AntiForgeryToken()
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="material-icons">face</i>
                                     </span>
                                     <div class="form-group label-floating is-empty">
                                         <label class="control-label">NAME</label>
-                                        <input id="name" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <input id="name" name="name" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
                                         <span class="material-input"></span>
                                     </div>
                                 </div>
@@ -37,7 +45,7 @@
                                     </span>
                                     <div class="form-group label-floating is-empty">
                                         <label class="control-label">EMAIL</label>
-                                        <input id="email" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
+                                        <input id="email" name="email" type="text" class="form-control input-code" data-toggle="modal" data-target="#num-pad">
                                         <span class="material-input"></span>
                                     </div>
                                 </div>
@@ -61,7 +69,7 @@
                                         <span class="material-input"></span>
                                     </div>
                                 </div>
-
+                                <input type="hidden" id="keys" name="keys" />
                                 <button id="btn-register" type="submit" class="btn btn-info pull-right">Register</button>
                                 <div class="clearfix"></div>
                             </form>

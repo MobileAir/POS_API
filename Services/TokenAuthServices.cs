@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
+using DataAccess.Models;
 using DataAccess.UnitOfWork;
+using Services.DTOs;
 using Services.Interface;
 
 namespace Services
@@ -27,9 +30,9 @@ namespace Services
 
         #region Public member methods.
 
-        public bool IsTokenValid(string token, string ip, string userAgent)
+        public UserDTO IsTokenValid(string token,string userAgent)
         {
-            bool result = false;
+            UserDTO result = null;
 
             try
             {
@@ -60,10 +63,15 @@ namespace Services
                             var hashedPasword = user.Password;
 
                             // Hash the message with the key to generate a token.
-                            string computedToken = GenerateToken(username, hashedPasword, ip, userAgent, ticks);
+                            string computedToken = GenerateToken(username, hashedPasword, userAgent, ticks);
 
                             // Compare the computed token with the one supplied and ensure they match.
-                            result = (token == computedToken);
+                            if (token == computedToken)
+                            {
+                                Mapper.CreateMap<User, UserDTO>();
+                                result = Mapper.Map<User, UserDTO>(user);
+                            }
+                                
                         }
                     }
                 }
@@ -90,9 +98,9 @@ namespace Services
         /// 4. Compare the computed token with the one supplied and ensure they match.
         /// </summary>
         /// TODO: add custom route
-        public string GenerateToken(string username, string password, string ip, string userAgent, long ticks)
+        public string GenerateToken(string username, string password, string userAgent, long ticks)
         {
-            string hash = string.Join(":", new string[] { username, ip, userAgent, ticks.ToString() });
+            string hash = string.Join(":", new string[] { username, userAgent, ticks.ToString() });
             string hashLeft = "";
             string hashRight = "";
 

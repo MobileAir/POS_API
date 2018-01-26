@@ -16,7 +16,7 @@ var SecurityManager = {
             return "";
 
         // Get the (C# compatible) ticks to use as a timestamp. http://stackoverflow.com/a/7968483/2596404
-        var ticks = ((new Date().getTime() * 30000) + 621355968000000000);
+        var ticks = ((new Date().getTime() * 10000) + 621355968000000000);
 
         var userAgent = navigator.userAgent.replace(/ \.NET.+;/, '');
 
@@ -33,22 +33,13 @@ var SecurityManager = {
     },
 
     generateLoginToken: function (username, password) {
-        // Generates a token to be used for API calls. The first time during authentication, pass in a username/password. All subsequent calls can simply omit username and password, as the same token key (hashed password) will be used.
-        //if (username && password) {
-        //    // If the user is providing credentials, then create a new key.
-        //    SecurityManager.logout();
-        //}
         
         // Set the username.
         SecurityManager.username = SecurityManager.username || username;
 
         // Set the key to a hash of the user's password + salt.
         SecurityManager.key = SecurityManager.key || CryptoJS.enc.Base64.stringify(CryptoJS.HmacSHA256([password, SecurityManager.salt].join(':'), SecurityManager.salt));
-        //alert(SecurityManager.key);
-
-        // Set the client IP address.
-        SecurityManager.ip = SecurityManager.ip || SecurityManager.getIp();
-
+        
         // Persist key pieces.
         if (SecurityManager.username) {
             localStorage['SecurityManager.username'] = SecurityManager.username;
@@ -59,7 +50,7 @@ var SecurityManager = {
         var ticks = ((new Date().getTime() * 10000) + 621355968000000000);
 
         // Construct the hash body by concatenating the username, ip, and userAgent.
-        var message = [SecurityManager.username, SecurityManager.ip, navigator.userAgent.replace(/ \.NET.+;/, ''), ticks].join(':');
+        var message = [SecurityManager.username, navigator.userAgent.replace(/ \.NET.+;/, ''), ticks].join(':');
         //alert(message);
         // Hash the body, using the key.
         var hash = CryptoJS.HmacSHA256(message, SecurityManager.key);
@@ -84,7 +75,6 @@ var SecurityManager = {
         // Persist key piece.
         localStorage['SecurityManager.key'] = SecurityManager.key;
         
-        
         return [SecurityManager.key, username.split("").reverse().join("")].join(':');
     },
 
@@ -95,14 +85,14 @@ var SecurityManager = {
 
         localStorage.removeItem('redirect');
 
-        localStorage.removeItem('SecurityManager.ip');
-        SecurityManager.ip = null;
-
         localStorage.removeItem('SecurityManager.key');
         SecurityManager.key = null;
-
-        $.get('user/signout', function () {
+        var url = window.location.origin;
+        var uri = '/user/signout';
+        console.log(url + uri);
+        $.get(url+uri, function () {
             alert('User logged out!');
+            window.location.assign("/home");
         }).fail(function (error) {
             alert('HTTP Error ' + error.status);
         });
@@ -111,9 +101,6 @@ var SecurityManager = {
     clear: function () {
         localStorage.removeItem('SecurityManager.username');
         SecurityManager.username = null;
-
-        localStorage.removeItem('SecurityManager.ip');
-        SecurityManager.ip = null;
 
         localStorage.removeItem('SecurityManager.key');
         SecurityManager.key = null;

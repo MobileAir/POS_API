@@ -16,15 +16,24 @@
 
     // Button click events.
     $('#btn-login').click(function () {
-        // Login as the user and create a token key.
-        //var uri = SecurityManager.generateUri('adminToken', 'AdminWebApiDi');
+        var $accessCode = $('#access-code');
+        var $pin = $('#pin');
+
+        //var token = SecurityManager.generateLoginToken('adminToken', 'AdminWebApiDi');
+        var token = SecurityManager.generateLoginToken($accessCode.val(), $pin.val());
+
+        $('#token').val(token);
+        $('#sign-in').submit();
+        //alert(token);
         //$.ajax({
-        //    url: uri,
+        //    url: '/user/signin?token=' + token,
         //    type: "GET", // TODO change to post and poass token as data : {token:token}
-        //    async: true, 
+        //    //data: {token : token},
+        //    async: true,
         //    success: function (data) {
         //        //alert('User logged in!');
         //        //window.location = "/tile/sale";
+        //        localStorage.removeItem('redirect'); // remove return form sign up
         //        window.location.assign("/tile/sale");
         //    },
         //    error: function (jqXHR, textStatus, errorThrown) {
@@ -34,35 +43,11 @@
         //        console.log(errorThrown);
         //    }
         //});
-        var $accessCode = $('#access-code');
-        var $pin = $('#pin');
 
-        //var token = SecurityManager.generateLoginToken('adminToken', 'AdminWebApiDi');
-        var token = SecurityManager.generateLoginToken($accessCode.val(), $pin.val());
-        //alert(token);
-        $.ajax({
-            url: '/user/signin?token=' + token,
-            type: "GET", // TODO change to post and poass token as data : {token:token}
-            //data: {token : token},
-            async: true,
-            success: function (data) {
-                //alert('User logged in!');
-                //window.location = "/tile/sale";
-                localStorage.removeItem('redirect'); // remove return form sign up
-                window.location.assign("/tile/sale");
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                alert('Cannot log you in with those creds... sorry!');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            }
-        });
-
-        $('#btn-login').css("display", "none");
-        $('#btn-logout').css("display", "inline");
-        $('#status').text('Welcome, ' + SecurityManager.username + '!');
-        $('#role').html('Employee, #1234.');
+        //$('#btn-login').css("display", "none");
+        //$('#btn-logout').css("display", "inline");
+        //$('#status').text('Welcome, ' + SecurityManager.username + '!');
+        //$('#role').html('Employee, #1234.');
     });
 
     $('#btn-logout').click(function () {

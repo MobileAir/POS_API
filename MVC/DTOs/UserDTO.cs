@@ -1,6 +1,6 @@
-﻿namespace Services.DTOs
+﻿namespace MVC.DTOs
 {
-    public class UserDTO
+    public class UserDTO : IDTO
     {
         //public int UserId { get; set; }
         
